@@ -1,0 +1,21 @@
+[project]
+name = "comfyui-minimax-h3-segment-studio"
+version = "1.0.0"
+description = "MiniMax H3 long video for ComfyUI: Timeline turbo first pass plus Director-style windowed 2.0 refine on 16GB GPUs."
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.10"
+dependencies = []
+keywords = ["comfyui", "minimax-h3", "long-video", "timeline", "windowed-refine", "16gb"]
+
+[project.urls]
+# Replace with your GitHub URL before publishing.
+Repository = "https://github.com/Xnrs-499/ComfyUI-MiniMaxH3-SegmentStudio"
+
+[project.optional-dependencies]
+dev = []
+
+[tool.comfy]
+PublisherId = "local"
+DisplayName = "MiniMax H3 Segment Studio"
+Icon = ""

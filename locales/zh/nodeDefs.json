@@ -1,0 +1,896 @@
+{
+  "MiniMaxH3TimelinePlanner": {
+    "display_name": "MiniMax H3 素材规划台",
+    "description": "在时间线上编排参考视频、图片和音频，并输出可复用的素材规划。",
+    "inputs": {
+      "import_preset": {
+        "name": "导入预设",
+        "tooltip": "可选：连接本地预设加载器输出的预设。"
+      },
+      "prompt_index": {
+        "name": "提示词序号",
+        "tooltip": "可选的从 1 开始的分段序号，用于选择该段分配的图片和音频。"
+      },
+      "width": {
+        "name": "宽度"
+      },
+      "height": {
+        "name": "高度"
+      },
+      "generation_seconds": {
+        "name": "生成时长",
+        "tooltip": "青色生成选区的持续时间。"
+      },
+      "timeline_data": {
+        "name": "时间线数据"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "素材规划"
+      },
+      "1": {
+        "name": "Omni 素材包"
+      },
+      "2": {
+        "name": "分段规划"
+      }
+    }
+  },
+  "MiniMaxH3PresetLoader": {
+    "display_name": "MiniMax H3 本地预设加载器",
+    "description": "检索本地时间线预设，并将其送入素材规划台。",
+    "inputs": {
+      "preset_name": {
+        "name": "预设"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "预设数据"
+      },
+      "1": {
+        "name": "预设名称"
+      },
+      "2": {
+        "name": "加载状态"
+      }
+    }
+  },
+  "MiniMaxH3PresetExporter": {
+    "display_name": "MiniMax H3 导出预设",
+    "description": "将时间线配置单独保存，或连同全部引用素材保存为可移植的本地文件夹。",
+    "inputs": {
+      "preset_name": {
+        "name": "预设名称"
+      },
+      "save_mode": {
+        "name": "保存模式"
+      },
+      "material_plan": {
+        "name": "素材规划"
+      },
+      "segment_plan": {
+        "name": "分段规划"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "保存文件夹"
+      },
+      "1": {
+        "name": "保存状态"
+      }
+    }
+  },
+  "MiniMaxH3OmniPromptBridge": {
+    "display_name": "MiniMax H3 Omni 素材包提示词桥",
+    "description": "将素材包送入 MiniMax-H3 Prompt Rewriter Omni，避免工作流形成循环。",
+    "inputs": {
+      "options": {
+        "name": "选项"
+      },
+      "media_bundle": {
+        "name": "素材包"
+      },
+      "task": {
+        "name": "任务"
+      },
+      "prompt": {
+        "name": "提示词"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "quantization": {
+        "name": "量化"
+      },
+      "greedy": {
+        "name": "贪婪模式"
+      },
+      "seed": {
+        "name": "种子"
+      },
+      "keep_model_loaded": {
+        "name": "保持模型加载"
+      },
+      "max_frames": {
+        "name": "最大帧数"
+      },
+      "bypass": {
+        "name": "绕过"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "扩写提示词"
+      }
+    }
+  },
+  "MiniMaxH3TimelineEncoder": {
+    "display_name": "MiniMax H3 规划编码器",
+    "description": "将素材规划和提示词编码为 MiniMax H3 条件与 Latent。",
+    "inputs": {
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "视频 VAE"
+      },
+      "audio_vae": {
+        "name": "音频 VAE"
+      },
+      "plan": {
+        "name": "素材规划"
+      },
+      "prompt": {
+        "name": "提示词"
+      },
+      "ref_image_size": {
+        "name": "参考图尺寸"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "正向条件"
+      },
+      "1": {
+        "name": "Latent"
+      },
+      "2": {
+        "name": "视频原声合并",
+        "tooltip": "从时间线视频参考中混合的原声。"
+      },
+      "3": {
+        "name": "独立音频合并",
+        "tooltip": "按编号顺序拼接的独立参考音频。"
+      }
+    }
+  },
+  "MiniMaxH3TimelineDirector": {
+    "display_name": "MiniMax H3 时间线导演台",
+    "description": "将素材规划台与规划编码器合并的兼容节点。",
+    "inputs": {
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "视频 VAE"
+      },
+      "audio_vae": {
+        "name": "音频 VAE"
+      },
+      "prompt": {
+        "name": "提示词"
+      },
+      "width": {
+        "name": "宽度"
+      },
+      "height": {
+        "name": "高度"
+      },
+      "generation_seconds": {
+        "name": "生成时长"
+      },
+      "ref_image_size": {
+        "name": "参考图尺寸"
+      },
+      "timeline_data": {
+        "name": "时间线数据"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "正向条件"
+      },
+      "1": {
+        "name": "Latent"
+      },
+      "2": {
+        "name": "视频原声合并"
+      },
+      "3": {
+        "name": "独立音频合并"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentExpansion": {
+    "display_name": "MiniMax H3 有限分段展开",
+    "description": "旧工作流兼容入口。新工作流请在素材规划台编辑分段时间框、素材与提示词，直接连接有限分段采样。",
+    "inputs": {
+      "plan": {
+        "name": "素材规划"
+      },
+      "segment_prompts": {
+        "name": "分段提示词"
+      },
+      "segment_count": {
+        "name": "分段数量"
+      },
+      "overlap_frames": {
+        "name": "重叠帧数"
+      },
+      "inject_continuity_instruction": {
+        "name": "注入开头连续性说明"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "有限分段规划"
+      },
+      "1": {
+        "name": "实际重叠帧"
+      },
+      "2": {
+        "name": "规划状态"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLatentContinuation": {
+    "display_name": "MiniMax H3 有限 Latent 续接（内部）",
+    "inputs": {
+      "positive": {
+        "name": "正向条件"
+      },
+      "target_latent": {
+        "name": "目标 Latent"
+      },
+      "iteration": {
+        "name": "迭代序号"
+      },
+      "previous_latent": {
+        "name": "上一段 Latent"
+      },
+      "overlap_frames": {
+        "name": "重叠帧数"
+      },
+      "continue_audio_latent": {
+        "name": "续接音频 Latent"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "正向条件"
+      },
+      "1": {
+        "name": "目标 Latent"
+      },
+      "2": {
+        "name": "实际重叠帧"
+      },
+      "3": {
+        "name": "采样模型"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentFinalize": {
+    "display_name": "MiniMax H3 有限分段收尾（内部）",
+    "inputs": {
+      "sampled_latent": {
+        "name": "采样 Latent"
+      },
+      "images": {
+        "name": "图像"
+      },
+      "iteration": {
+        "name": "迭代序号"
+      },
+      "overlap_frames": {
+        "name": "重叠帧数"
+      },
+      "trim_audio_head": {
+        "name": "裁掉音频头部"
+      },
+      "audio": {
+        "name": "音频"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "完整 Latent"
+      },
+      "1": {
+        "name": "去重画面"
+      },
+      "2": {
+        "name": "去重音频"
+      }
+    }
+  },
+  "MiniMaxH3FiniteAudioTrimTail": {
+    "display_name": "MiniMax H3 有限音频尾部裁剪（内部）",
+    "inputs": {
+      "audio": {
+        "name": "音频"
+      },
+      "overlap_frames": {
+        "name": "重叠帧数"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "裁剪后音频"
+      }
+    }
+  },
+  "MiniMaxH3FiniteOutputTrim": {
+    "display_name": "MiniMax H3 有限输出裁剪（内部）",
+    "inputs": {
+      "images": {
+        "name": "图像"
+      },
+      "audio": {
+        "name": "音频"
+      },
+      "output_frames": {
+        "name": "输出帧数"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "裁剪后画面"
+      },
+      "1": {
+        "name": "裁剪后音频"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentSampler": {
+    "display_name": "MiniMax H3 有限分段采样",
+    "description": "按规划分段采样。满 8 段默认改成 Director 同款逐段循环，避免超长多段 0.4 一采把整张图展开后 OOM。每段立刻写成 mp4；再 Queue 可从 output/minimax_seg_cache 续跑。",
+    "inputs": {
+      "model": {
+        "name": "模型"
+      },
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "视频 VAE"
+      },
+      "audio_vae": {
+        "name": "音频 VAE"
+      },
+      "finite_plan": {
+        "name": "有限分段规划"
+      },
+      "sampler": {
+        "name": "采样器"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      },
+      "seed": {
+        "name": "种子"
+      },
+      "continue_audio_latent": {
+        "name": "续接音频 Latent"
+      },
+      "ref_image_size": {
+        "name": "参考图尺寸"
+      },
+      "export_mode": {
+        "name": "导出方式",
+        "tooltip": "segments（分段导出）：每段一完成就写入 output/minimax_seg_export，崩了前面的也还在。all（全部导出）：只在临时目录最后拼成一条。"
+      },
+      "output_megapixels": {
+        "name": "输出百万像素",
+        "tooltip": "0=保持规划台分辨率。h3_latent + 二采步数>0：每窗 3D 放大后在约 1920x1088 上 T8。VSR 类则先放大像素。"
+      },
+      "upscale_method": {
+        "name": "超分方式",
+        "tooltip": "h3_latent：Director 同款 3D 放大 + 上一段 2.0 尾巴钉入后再 T8（走逐段循环）。nvidia_rtx_vsr/lanczos/bicubic：放大像素。"
+      },
+      "refine_denoise": {
+        "name": "二采 denoise",
+        "tooltip": "h3_latent：3D 放大并钉尾后在输出画布上 T8。VSR：先在规划台分辨率轻度重绘再超分。0=跳过 T8。"
+      },
+      "refine_steps": {
+        "name": "二采步数"
+      },
+      "face_refine": {
+        "name": "脸部二次优化",
+        "tooltip": "可选。接 MiniMax H3 Director FaceRefine。不接线则跳过。仍是 MiniMax H3，只采约 768 脸裁。先贴在 0.4 上再整段 VSR，避免 2.0 上出现方块贴图。规划台「开启二采」请保持关闭。"
+      },
+      "execution_mode": {
+        "name": "执行方式",
+        "tooltip": "auto：满 8 段自动改成逐段循环（避免超长多段把整张图展开后 OOM）；1–7 段仍展开。sequential：始终逐段，段间卸模型。graph：始终展开（长片会 OOM）。"
+      },
+      "clear_vram_between_segments": {
+        "name": "段间清理显存",
+        "tooltip": "逐段模式下每段结束后卸载模型并清空 CUDA 缓存。展开模式无效。"
+      },
+      "cache_name": {
+        "name": "缓存文件夹名",
+        "tooltip": "可选。落到 output/minimax_seg_cache/<名字>/。留空则用计划+种子的哈希。OOM 后用同一张图再 Queue，会跳过已经写出的段。"
+      },
+      "live_preview": {
+        "name": "过程预览",
+        "tooltip": "采样时直接在本节点上显示 tiny-VAE 过程预览，不用再接 KJ 预览节点。权重放到 models/vae_approx/MiniMax-H3-TAE.safetensors。"
+      },
+      "preview_tiny_vae": {
+        "name": "预览 Tiny VAE",
+        "tooltip": "auto 会选 MiniMax-H3-TAE.safetensors 或 taeh3.safetensors。none 则用 Latent2RGB。"
+      },
+      "preview_max_resolution": {
+        "name": "预览最大边长",
+        "tooltip": "预览图最长边。0=不缩小。"
+      },
+      "preview_frames": {
+        "name": "预览帧数",
+        "tooltip": "每步解码多少帧做动画。1=静帧。想接近整段可调到 241，显存会更高。"
+      },
+      "preview_fps": {
+        "name": "预览帧率",
+        "tooltip": "动画预览播放帧率。预览帧数为 1 时无效。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "末段采样 Latent"
+      },
+      "1": {
+        "name": "合并画面"
+      },
+      "2": {
+        "name": "合并音频"
+      },
+      "3": {
+        "name": "采样状态"
+      },
+      "4": {
+        "name": "Final Video"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentVideoSampler": {
+    "display_name": "MiniMax H3 有限分段采样(低内存版本)",
+    "description": "逐段解码并编码，不保留整条 RGB。导出方式选 segments 时，每段立刻落到 output/minimax_seg_export。",
+    "inputs": {
+      "model": {
+        "name": "模型"
+      },
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "视频 VAE"
+      },
+      "audio_vae": {
+        "name": "音频 VAE"
+      },
+      "finite_plan": {
+        "name": "有限分段规划"
+      },
+      "sampler": {
+        "name": "采样器"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      },
+      "seed": {
+        "name": "种子"
+      },
+      "continue_audio_latent": {
+        "name": "续接音频 Latent"
+      },
+      "ref_image_size": {
+        "name": "参考图尺寸"
+      },
+      "export_mode": {
+        "name": "导出方式",
+        "tooltip": "segments（分段导出）：每段一完成就写入 output/minimax_seg_export。all（全部导出）：只在临时目录最后拼成一条。"
+      },
+      "execution_mode": {
+        "name": "执行方式",
+        "tooltip": "auto：满 8 段自动改成逐段循环。sequential：始终逐段。graph：始终展开（长片会 OOM）。"
+      },
+      "clear_vram_between_segments": {
+        "name": "段间清理显存"
+      },
+      "cache_name": {
+        "name": "缓存文件夹名"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "末段采样 Latent"
+      },
+      "1": {
+        "name": "Final Video"
+      },
+      "2": {
+        "name": "最终音频"
+      },
+      "3": {
+        "name": "采样状态"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopInitialize": {
+    "display_name": "MiniMax H3 初始化分段循环",
+    "description": "为 ComfyUI 原生开始循环建立有限分段携带状态。",
+    "inputs": {
+      "finite_plan": {
+        "name": "有限分段规划"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "初始循环状态"
+      },
+      "1": {
+        "name": "分段数量"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopSegment": {
+    "display_name": "MiniMax H3 选择循环分段",
+    "description": "按照原生循环迭代序号选择本段素材规划、提示词和重叠配置。",
+    "inputs": {
+      "finite_plan": {
+        "name": "有限分段规划"
+      },
+      "iteration_index": {
+        "name": "迭代序号"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "本段素材规划"
+      },
+      "1": {
+        "name": "本段提示词"
+      },
+      "2": {
+        "name": "重叠帧数"
+      },
+      "3": {
+        "name": "开启二采"
+      },
+      "4": {
+        "name": "二采模型"
+      },
+      "5": {
+        "name": "高清采样步数"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopPrepare": {
+    "display_name": "MiniMax H3 准备循环分段",
+    "description": "在用户自选采样节点之前应用上一段 Latent 续接、Drift-Control 与固定音频。",
+    "inputs": {
+      "finite_plan": {
+        "name": "有限分段规划"
+      },
+      "loop_state": {
+        "name": "当前循环状态"
+      },
+      "segment_plan": {
+        "name": "本段素材规划"
+      },
+      "positive": {
+        "name": "正向条件"
+      },
+      "target_latent": {
+        "name": "目标 Latent"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      },
+      "vae": {
+        "name": "视频 VAE"
+      },
+      "audio_vae": {
+        "name": "音频 VAE"
+      },
+      "iteration_index": {
+        "name": "迭代序号"
+      },
+      "continue_audio_latent": {
+        "name": "续接音频 Latent"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "正向条件"
+      },
+      "1": {
+        "name": "采样 Latent"
+      },
+      "2": {
+        "name": "采样模型"
+      },
+      "3": {
+        "name": "实际重叠帧"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopAccumulate": {
+    "display_name": "MiniMax H3 合并循环分段",
+    "description": "删除重复开头、合并本段音画，并把状态送回原生结束循环。",
+    "inputs": {
+      "finite_plan": {
+        "name": "有限分段规划"
+      },
+      "loop_state": {
+        "name": "当前循环状态"
+      },
+      "sampled_latent": {
+        "name": "采样 Latent"
+      },
+      "images": {
+        "name": "图像"
+      },
+      "audio": {
+        "name": "音频"
+      },
+      "iteration_index": {
+        "name": "迭代序号"
+      },
+      "continue_audio_latent": {
+        "name": "续接音频 Latent"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "下一循环状态"
+      },
+      "1": {
+        "name": "当前合并画面"
+      },
+      "2": {
+        "name": "当前合并音频"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopOutput": {
+    "display_name": "MiniMax H3 完成分段循环",
+    "description": "从原生结束循环的最终状态输出完整视频、音频及末段 Latent。",
+    "inputs": {
+      "loop_state": {
+        "name": "最终循环状态"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "末段采样 Latent"
+      },
+      "1": {
+        "name": "合并画面"
+      },
+      "2": {
+        "name": "合并音频"
+      },
+      "3": {
+        "name": "循环状态"
+      }
+    }
+  },
+  "MiniMaxH3AddLatentGuide": {
+    "display_name": "MiniMax H3 直接 Latent Guide（实验）",
+    "description": "从一段 H3 AV Latent 直接复制合法时间块到另一段。",
+    "inputs": {
+      "positive": {
+        "name": "正向条件"
+      },
+      "target_latent": {
+        "name": "目标 Latent"
+      },
+      "source_latent": {
+        "name": "源 Latent"
+      },
+      "guide_frames": {
+        "name": "Guide 帧数"
+      },
+      "frame_idx": {
+        "name": "目标起始帧"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "正向条件"
+      },
+      "1": {
+        "name": "实验信息"
+      }
+    }
+  },
+  "MiniMaxH3VisualDifferenceMetrics": {
+    "display_name": "MiniMax H3 视频差异指标（实验）",
+    "description": "比较两批 RGB 视频帧并报告颜色与像素差异。",
+    "inputs": {
+      "reference": {
+        "name": "参考"
+      },
+      "comparison": {
+        "name": "对比"
+      },
+      "difference_gain": {
+        "name": "差异增益"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "指标报告"
+      },
+      "1": {
+        "name": "放大差异"
+      }
+    }
+  },
+  "MiniMaxH3WindowedRefine": {
+    "display_name": "MiniMax H3 按窗二采",
+    "description": "把已经拼好的 0.4 成片按重叠窗口二采到 2.0。每窗先 3D latent 放大，钉入上一段 2.0 AV 尾巴，再在输出画布上 T8。不会把整条 2.0 再送进 H3。12 段以上会丢掉像素，请把一采 Final Video 接到「一采成片」。",
+    "inputs": {
+      "images": {
+        "name": "图像",
+        "tooltip": "一采保留的 0.4 合并画面。若已接一采成片，这条可为空。"
+      },
+      "model": {
+        "name": "模型"
+      },
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "视频 VAE"
+      },
+      "audio_vae": {
+        "name": "音频 VAE"
+      },
+      "sampler": {
+        "name": "采样器"
+      },
+      "audio": {
+        "name": "音频"
+      },
+      "finite_plan": {
+        "name": "有限分段规划",
+        "tooltip": "可选。用来取画布尺寸和 3D 放大模型。一采窗口超过「窗口大小」才会拆。15 秒一段请选「整段15秒」，显存够才行。"
+      },
+      "source_video": {
+        "name": "一采成片",
+        "tooltip": "接一采 Final Video。12 段以上 Merged Frames 会变成 8×8，二采改从这份 0.4 mp4 按窗读帧。"
+      },
+      "seed": {
+        "name": "种子"
+      },
+      "output_megapixels": {
+        "name": "输出百万像素",
+        "tooltip": "二采画布。2.0 最清也最吃显存。调到 1.5 / 1.0 再在「窗口大小」里选更长，显存够可选「整段15秒」。"
+      },
+      "upscale_method": {
+        "name": "超分方式",
+        "tooltip": "h3_latent：3D 放大（更稳、偏软）。nvidia_rtx_vsr：最初版双采超清同款，先 RTX VSR 再轻 T8。窗口大小用旁边的下拉。需要 nvidia-vfx。"
+      },
+      "refine_denoise": {
+        "name": "二采 denoise",
+        "tooltip": "3D 放大后在 2.0 上 T8 的去噪。0=不跑 T8。"
+      },
+      "refine_steps": {
+        "name": "二采步数",
+        "tooltip": "0 且超分方式为 h3_latent：只 3D 放大再解码，不跑 T8。"
+      },
+      "clear_vram_between_windows": {
+        "name": "窗间清理显存"
+      },
+      "window_frames": {
+        "name": "窗口大小",
+        "tooltip": "下拉选择，不用手填。2.0 / 16GB 用约 5.9 秒。分辨率调低后再选更长；15 秒一段选「整段15秒」。",
+        "options": {
+          "141 (~5.9s)": "约5.9秒（2.0 / 16GB）",
+          "158 (~6.6s)": "约6.6秒",
+          "175 (~7.3s)": "约7.3秒",
+          "192 (~8s)": "约8秒（整段8秒）",
+          "243 (~10s)": "约10秒",
+          "362 (whole 15s)": "整段15秒"
+        }
+      },
+      "overlap_frames": {
+        "name": "重叠帧数",
+        "tooltip": "只能是 5/22/39/56。39≈1.6 秒，56≈2.3 秒。正好 2 秒（48 帧）不是 H3 合法重叠。"
+      },
+      "latent_upscale_model": {
+        "name": "Latent 放大模型",
+        "tooltip": "超分方式为 h3_latent 时使用。auto 会选兼容的 H3 权重。"
+      },
+      "split_long_windows": {
+        "name": "长段切窗再放大",
+        "tooltip": "仅 3D 放大时：把超过「窗口大小」的段切开。关掉则一段一采窗口只放大一次。T8 本来就会按下拉窗口切。"
+      },
+      "live_preview": {
+        "name": "过程预览",
+        "tooltip": "T8 采样时直接在本节点上显示 tiny-VAE 过程预览，不用再接 KJ 预览节点。"
+      },
+      "preview_tiny_vae": {
+        "name": "预览 Tiny VAE",
+        "tooltip": "auto 会选 MiniMax-H3-TAE.safetensors 或 taeh3.safetensors。none 则用 Latent2RGB。"
+      },
+      "preview_max_resolution": {
+        "name": "预览最大边长",
+        "tooltip": "预览图最长边。0=不缩小。"
+      },
+      "preview_frames": {
+        "name": "预览帧数",
+        "tooltip": "每步解码多少帧做动画。1=静帧。想接近整段可调到 241，显存会更高。"
+      },
+      "preview_fps": {
+        "name": "预览帧率",
+        "tooltip": "动画预览播放帧率。预览帧数为 1 时无效。"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Final Video"
+      },
+      "1": {
+        "name": "音频"
+      },
+      "2": {
+        "name": "状态"
+      }
+    }
+  },
+  "MiniMaxH3LivePreviewAttach": {
+    "display_name": "MiniMax H3 过程预览挂载（内部）",
+    "description": "内部节点。给 MODEL 挂上过程预览，画面发回有限分段采样或按窗二采。",
+    "inputs": {
+      "model": {
+        "name": "模型"
+      },
+      "target_node_id": {
+        "name": "目标节点 ID"
+      },
+      "enabled": {
+        "name": "启用"
+      },
+      "tiny_vae": {
+        "name": "Tiny VAE"
+      },
+      "max_resolution": {
+        "name": "最大边长"
+      },
+      "preview_frames": {
+        "name": "预览帧数"
+      },
+      "preview_fps": {
+        "name": "预览帧率"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "模型"
+      }
+    }
+  }
+}

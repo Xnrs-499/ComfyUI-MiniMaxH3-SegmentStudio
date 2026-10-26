@@ -1,0 +1,42 @@
+MiniMax H3 Segment Studio
+=========================
+
+This ComfyUI custom-node pack is a GPL-3.0 fork. Full thanks and plugin list: CREDITS.md
+
+Upstream bundled in this folder
+-------------------------------
+
+1. Songssx / Shi Xiongsong — ComfyUI-MiniMaxH3-TimelineDirector
+   https://github.com/Songssx/ComfyUI-MiniMaxH3-TimelineDirector
+   Material planner, finite segment sampler, Drift-Control, locked audio,
+   SelfLift two-stage sampling, local presets, and the timeline frontend.
+
+2. facok/comfyui-SelfLift and LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler
+   Bundled under selflift_runtime/ (see selflift_runtime/NOTICE.md).
+
+3. Local 16 GB work on top of that plugin:
+   sequential first-pass sampling, windowed 2.0 refine, first-pass
+   prompt/reference reuse, AIMDO CUDA-graph reclaim between windows.
+
+Design reference (not vendored)
+-------------------------------
+
+- AIMixer / ComfyUI_MiniMaxH3_Director
+  https://github.com/AIMixer/ComfyUI_MiniMaxH3_Director
+  Overlapping-window continuity: encode 0.4, lift, re-pin previous 2.0 AV tail, T8 at output canvas.
+
+- NikoDemon80 / ComfyUI-H3-Motion-Context
+  https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context
+
+Separate plugins required by the example graph
+----------------------------------------------
+
+- comfyanonymous/ComfyUI (official MiniMax H3 nodes)
+- kijai/ComfyUI-KJNodes (PathchSageAttentionKJ)
+- T8mars/comfyui-minimax-h3-audio-T8 (MiniMaxH3AudioConditioningT8 fallback)
+- PT_H3ConcatAVLatent (AV latent concat)
+
+Do not load the original Timeline Director pack at the same time:
+node IDs are intentionally compatible so existing graphs keep working.
+Rename custom_nodes/ComfyUI-MiniMaxH3-TimelineDirector to
+ComfyUI-MiniMaxH3-TimelineDirector.disabled after installing this pack.

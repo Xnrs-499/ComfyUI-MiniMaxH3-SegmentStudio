@@ -1,0 +1,2 @@
+# No extra pip packages. Uses ComfyUI's torch / numpy / safetensors stack.
+# Optional (already common in aki / kjnodes packs): SageAttention via PathchSageAttentionKJ.

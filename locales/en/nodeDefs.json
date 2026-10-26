@@ -1,0 +1,896 @@
+{
+  "MiniMaxH3TimelinePlanner": {
+    "display_name": "MiniMax H3 Material Planner",
+    "description": "Arrange reference video, images, and audio on a timeline and emit a reusable material plan.",
+    "inputs": {
+      "import_preset": {
+        "name": "Import Preset",
+        "tooltip": "Optional preset from the Local Preset Loader."
+      },
+      "prompt_index": {
+        "name": "Prompt Index",
+        "tooltip": "Optional 1-based segment index used to select that segment's assigned images and audio."
+      },
+      "width": {
+        "name": "Width"
+      },
+      "height": {
+        "name": "Height"
+      },
+      "generation_seconds": {
+        "name": "Generation Duration",
+        "tooltip": "Duration of the cyan generation selection."
+      },
+      "timeline_data": {
+        "name": "Timeline Data"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Material Plan"
+      },
+      "1": {
+        "name": "Omni Media Bundle"
+      },
+      "2": {
+        "name": "Segment Plan"
+      }
+    }
+  },
+  "MiniMaxH3PresetLoader": {
+    "display_name": "MiniMax H3 Local Preset Loader",
+    "description": "Find a local timeline preset and feed it into the Material Planner.",
+    "inputs": {
+      "preset_name": {
+        "name": "Preset"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Preset Data"
+      },
+      "1": {
+        "name": "Preset Name"
+      },
+      "2": {
+        "name": "Preset Status"
+      }
+    }
+  },
+  "MiniMaxH3PresetExporter": {
+    "display_name": "MiniMax H3 Preset Export",
+    "description": "Save timeline configuration alone or with all referenced media in a portable local folder.",
+    "inputs": {
+      "preset_name": {
+        "name": "Preset Name"
+      },
+      "save_mode": {
+        "name": "Save Mode"
+      },
+      "material_plan": {
+        "name": "Material Plan"
+      },
+      "segment_plan": {
+        "name": "Segment Plan"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Saved Folder"
+      },
+      "1": {
+        "name": "Save Status"
+      }
+    }
+  },
+  "MiniMaxH3OmniPromptBridge": {
+    "display_name": "MiniMax H3 Omni Media Prompt Bridge",
+    "description": "Send a material bundle to MiniMax-H3 Prompt Rewriter Omni without creating a graph cycle.",
+    "inputs": {
+      "options": {
+        "name": "Options"
+      },
+      "media_bundle": {
+        "name": "Media Bundle"
+      },
+      "task": {
+        "name": "Task"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "quantization": {
+        "name": "Quantization"
+      },
+      "greedy": {
+        "name": "Greedy"
+      },
+      "seed": {
+        "name": "Seed"
+      },
+      "keep_model_loaded": {
+        "name": "Keep Model Loaded"
+      },
+      "max_frames": {
+        "name": "Maximum Frames"
+      },
+      "bypass": {
+        "name": "Bypass"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Rewritten Prompt"
+      }
+    }
+  },
+  "MiniMaxH3TimelineEncoder": {
+    "display_name": "MiniMax H3 Plan Encoder",
+    "description": "Encode a material plan and prompt into MiniMax H3 conditioning and latent inputs.",
+    "inputs": {
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "Video VAE"
+      },
+      "audio_vae": {
+        "name": "Audio VAE"
+      },
+      "plan": {
+        "name": "Material Plan"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "ref_image_size": {
+        "name": "Reference Image Size"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Positive"
+      },
+      "1": {
+        "name": "Latent"
+      },
+      "2": {
+        "name": "Merged Video Audio",
+        "tooltip": "Source audio mixed from timeline video references."
+      },
+      "3": {
+        "name": "Merged Standalone Audio",
+        "tooltip": "Independent reference audio concatenated in numbered order."
+      }
+    }
+  },
+  "MiniMaxH3TimelineDirector": {
+    "display_name": "MiniMax H3 Timeline Director",
+    "description": "Compatibility node combining the material planner and plan encoder.",
+    "inputs": {
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "Video VAE"
+      },
+      "audio_vae": {
+        "name": "Audio VAE"
+      },
+      "prompt": {
+        "name": "Prompt"
+      },
+      "width": {
+        "name": "Width"
+      },
+      "height": {
+        "name": "Height"
+      },
+      "generation_seconds": {
+        "name": "Generation Duration"
+      },
+      "ref_image_size": {
+        "name": "Reference Image Size"
+      },
+      "timeline_data": {
+        "name": "Timeline Data"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Positive"
+      },
+      "1": {
+        "name": "Latent"
+      },
+      "2": {
+        "name": "Merged Video Audio"
+      },
+      "3": {
+        "name": "Merged Standalone Audio"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentExpansion": {
+    "display_name": "MiniMax H3 Finite Segment Expansion",
+    "description": "Legacy compatibility. Edit windows, materials and prompts in Material Planner and connect Segment Plan directly to Finite Segment Sampler.",
+    "inputs": {
+      "plan": {
+        "name": "Material Plan"
+      },
+      "segment_prompts": {
+        "name": "Segment Prompts"
+      },
+      "segment_count": {
+        "name": "Segment Count"
+      },
+      "overlap_frames": {
+        "name": "Overlap Frames"
+      },
+      "inject_continuity_instruction": {
+        "name": "Inject Opening Continuity"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Finite Segment Plan"
+      },
+      "1": {
+        "name": "Actual Overlap Frames"
+      },
+      "2": {
+        "name": "Planning Status"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLatentContinuation": {
+    "display_name": "MiniMax H3 Finite Latent Continuation (Internal)",
+    "inputs": {
+      "positive": {
+        "name": "Positive"
+      },
+      "target_latent": {
+        "name": "Target Latent"
+      },
+      "iteration": {
+        "name": "Iteration"
+      },
+      "previous_latent": {
+        "name": "Previous Latent"
+      },
+      "overlap_frames": {
+        "name": "Overlap Frames"
+      },
+      "continue_audio_latent": {
+        "name": "Continue Audio Latent"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Positive"
+      },
+      "1": {
+        "name": "Target Latent"
+      },
+      "2": {
+        "name": "Actual Overlap Frames"
+      },
+      "3": {
+        "name": "Sampling Model"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentFinalize": {
+    "display_name": "MiniMax H3 Finite Segment Finalize (Internal)",
+    "inputs": {
+      "sampled_latent": {
+        "name": "Sampled Latent"
+      },
+      "images": {
+        "name": "Images"
+      },
+      "iteration": {
+        "name": "Iteration"
+      },
+      "overlap_frames": {
+        "name": "Overlap Frames"
+      },
+      "trim_audio_head": {
+        "name": "Trim Audio Head"
+      },
+      "audio": {
+        "name": "Audio"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Complete Latent"
+      },
+      "1": {
+        "name": "Deduplicated Frames"
+      },
+      "2": {
+        "name": "Deduplicated Audio"
+      }
+    }
+  },
+  "MiniMaxH3FiniteAudioTrimTail": {
+    "display_name": "MiniMax H3 Finite Audio Tail Trim (Internal)",
+    "inputs": {
+      "audio": {
+        "name": "Audio"
+      },
+      "overlap_frames": {
+        "name": "Overlap Frames"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Trimmed Audio"
+      }
+    }
+  },
+  "MiniMaxH3FiniteOutputTrim": {
+    "display_name": "MiniMax H3 Finite Output Trim (Internal)",
+    "inputs": {
+      "images": {
+        "name": "Images"
+      },
+      "audio": {
+        "name": "Audio"
+      },
+      "output_frames": {
+        "name": "Output Frames"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Trimmed Frames"
+      },
+      "1": {
+        "name": "Trimmed Audio"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentSampler": {
+    "display_name": "MiniMax H3 Finite Segment Sampler",
+    "description": "Sample every planned segment with Drift-Control continuation. auto execution uses a Director-style one-segment loop from 8 windows so extra-long multi-segment 0.4 MP jobs do not expand a full DAG. Each clip spills to mp4; re-queue resumes from output/minimax_seg_cache.",
+    "inputs": {
+      "model": {
+        "name": "Model"
+      },
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "Video VAE"
+      },
+      "audio_vae": {
+        "name": "Audio VAE"
+      },
+      "finite_plan": {
+        "name": "Finite Segment Plan"
+      },
+      "sampler": {
+        "name": "Sampler"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      },
+      "seed": {
+        "name": "Seed"
+      },
+      "continue_audio_latent": {
+        "name": "Continue Audio Latent"
+      },
+      "ref_image_size": {
+        "name": "Reference Image Size"
+      },
+      "export_mode": {
+        "name": "Export Mode",
+        "tooltip": "segments: write each clip to output/minimax_seg_export as soon as it finishes (crash-safe). all: keep clips in temp and only assemble the final video."
+      },
+      "output_megapixels": {
+        "name": "Output Megapixels",
+        "tooltip": "0 keeps planner resolution. With h3_latent + Refine Steps, each window is 3D-lifted and T8-sampled at about 1920x1088. VSR methods upscale pixels instead."
+      },
+      "upscale_method": {
+        "name": "Upscale Method",
+        "tooltip": "h3_latent: Director-style 3D lift then T8 at 2.0 with previous-tail re-pin (sequential). nvidia_rtx_vsr/lanczos/bicubic upscale pixels."
+      },
+      "refine_denoise": {
+        "name": "Refine Denoise",
+        "tooltip": "With h3_latent: T8 at the output canvas after lift and re-pin. With VSR: light resample at planner resolution before upscale. 0 skips T8."
+      },
+      "refine_steps": {
+        "name": "Refine Steps"
+      },
+      "face_refine": {
+        "name": "Face Refine",
+        "tooltip": "Optional. Connect MiniMax H3 Director FaceRefine. Unconnected skips this. Same MiniMax H3 UNET on a ~768 face crop, after 2.0 VSR so the stitch lands on final pixels. Keep Material Planner secondPass off."
+      },
+      "execution_mode": {
+        "name": "Execution Mode",
+        "tooltip": "auto: switch to a one-segment loop from 8 segments (avoids extra-long multi-segment graph OOM); 1–7 stay expanded. sequential: always loop. graph: always expand (OOMs on long timelines)."
+      },
+      "clear_vram_between_segments": {
+        "name": "Clear VRAM Between Segments",
+        "tooltip": "Unload models and empty the CUDA cache after each sequential segment. Ignored in graph mode."
+      },
+      "cache_name": {
+        "name": "Cache Name",
+        "tooltip": "Optional folder under output/minimax_seg_cache. Empty uses a hash of the plan and seed. Re-queue after OOM to resume finished segments."
+      },
+      "live_preview": {
+        "name": "Live Preview",
+        "tooltip": "KJ-style tiny-VAE preview on this sampler while it samples. No extra node. Put MiniMax-H3-TAE.safetensors in models/vae_approx."
+      },
+      "preview_tiny_vae": {
+        "name": "Preview Tiny VAE",
+        "tooltip": "auto picks MiniMax-H3-TAE.safetensors or taeh3.safetensors. none uses Latent2RGB."
+      },
+      "preview_max_resolution": {
+        "name": "Preview Max Resolution",
+        "tooltip": "Max preview side in pixels. 0 = no downscale."
+      },
+      "preview_frames": {
+        "name": "Preview Frames",
+        "tooltip": "Animated frames per step. 1 = still. Raise toward clip length (e.g. 241) for a full-clip loop."
+      },
+      "preview_fps": {
+        "name": "Preview FPS",
+        "tooltip": "Playback FPS for the animated preview. Ignored when Preview Frames is 1."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Last Sampled Latent"
+      },
+      "1": {
+        "name": "Merged Frames"
+      },
+      "2": {
+        "name": "Merged Audio"
+      },
+      "3": {
+        "name": "Sampling Status"
+      },
+      "4": {
+        "name": "Final Video"
+      }
+    }
+  },
+  "MiniMaxH3FiniteSegmentVideoSampler": {
+    "display_name": "MiniMax H3 Finite Segment Sampler (Low Memory)",
+    "description": "Decode and encode one segment at a time. export_mode=segments writes crash-safe clips to output/minimax_seg_export.",
+    "inputs": {
+      "model": {
+        "name": "Model"
+      },
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "Video VAE"
+      },
+      "audio_vae": {
+        "name": "Audio VAE"
+      },
+      "finite_plan": {
+        "name": "Finite Segment Plan"
+      },
+      "sampler": {
+        "name": "Sampler"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      },
+      "seed": {
+        "name": "Seed"
+      },
+      "continue_audio_latent": {
+        "name": "Continue Audio Latent"
+      },
+      "ref_image_size": {
+        "name": "Reference Image Size"
+      },
+      "export_mode": {
+        "name": "Export Mode",
+        "tooltip": "segments: write each clip to output/minimax_seg_export as soon as it finishes (crash-safe). all: keep clips in temp and only assemble the final video."
+      },
+      "execution_mode": {
+        "name": "Execution Mode",
+        "tooltip": "auto: sequential loop from 8 segments. sequential: always loop. graph: always expand (OOMs on long timelines)."
+      },
+      "clear_vram_between_segments": {
+        "name": "Clear VRAM Between Segments"
+      },
+      "cache_name": {
+        "name": "Cache Name"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Last Sampled Latent"
+      },
+      "1": {
+        "name": "Final Video"
+      },
+      "2": {
+        "name": "Final Audio"
+      },
+      "3": {
+        "name": "Status"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopInitialize": {
+    "display_name": "MiniMax H3 Initialize Segment Loop",
+    "description": "Create the finite-segment carried state for ComfyUI's native Start Loop.",
+    "inputs": {
+      "finite_plan": {
+        "name": "Finite Segment Plan"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Initial Loop State"
+      },
+      "1": {
+        "name": "Segment Count"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopSegment": {
+    "display_name": "MiniMax H3 Select Loop Segment",
+    "description": "Select this iteration's material plan, prompt, and overlap settings.",
+    "inputs": {
+      "finite_plan": {
+        "name": "Finite Segment Plan"
+      },
+      "iteration_index": {
+        "name": "Iteration Index"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Segment Material Plan"
+      },
+      "1": {
+        "name": "Segment Prompt"
+      },
+      "2": {
+        "name": "Overlap Frames"
+      },
+      "3": {
+        "name": "Use Two-Stage Sampling"
+      },
+      "4": {
+        "name": "Two-Stage Model"
+      },
+      "5": {
+        "name": "High-Resolution Steps"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopPrepare": {
+    "display_name": "MiniMax H3 Prepare Loop Segment",
+    "description": "Apply previous latent continuation, Drift-Control, and fixed audio before user-selected sampling nodes.",
+    "inputs": {
+      "finite_plan": {
+        "name": "Finite Segment Plan"
+      },
+      "loop_state": {
+        "name": "Current Loop State"
+      },
+      "segment_plan": {
+        "name": "Segment Material Plan"
+      },
+      "positive": {
+        "name": "Positive"
+      },
+      "target_latent": {
+        "name": "Target Latent"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "sigmas": {
+        "name": "Sigmas"
+      },
+      "vae": {
+        "name": "Video VAE"
+      },
+      "audio_vae": {
+        "name": "Audio VAE"
+      },
+      "iteration_index": {
+        "name": "Iteration Index"
+      },
+      "continue_audio_latent": {
+        "name": "Continue Audio Latent"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Positive"
+      },
+      "1": {
+        "name": "Sampling Latent"
+      },
+      "2": {
+        "name": "Sampling Model"
+      },
+      "3": {
+        "name": "Actual Overlap Frames"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopAccumulate": {
+    "display_name": "MiniMax H3 Accumulate Loop Segment",
+    "description": "Remove the duplicate opening, merge this segment, and carry state through native End Loop.",
+    "inputs": {
+      "finite_plan": {
+        "name": "Finite Segment Plan"
+      },
+      "loop_state": {
+        "name": "Current Loop State"
+      },
+      "sampled_latent": {
+        "name": "Sampled Latent"
+      },
+      "images": {
+        "name": "Images"
+      },
+      "audio": {
+        "name": "Audio"
+      },
+      "iteration_index": {
+        "name": "Iteration Index"
+      },
+      "continue_audio_latent": {
+        "name": "Continue Audio Latent"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Next Loop State"
+      },
+      "1": {
+        "name": "Current Merged Frames"
+      },
+      "2": {
+        "name": "Current Merged Audio"
+      }
+    }
+  },
+  "MiniMaxH3FiniteLoopOutput": {
+    "display_name": "MiniMax H3 Finish Segment Loop",
+    "description": "Return the final video, audio, and last latent from native End Loop state.",
+    "inputs": {
+      "loop_state": {
+        "name": "Final Loop State"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Last Sampled Latent"
+      },
+      "1": {
+        "name": "Merged Frames"
+      },
+      "2": {
+        "name": "Merged Audio"
+      },
+      "3": {
+        "name": "Loop Status"
+      }
+    }
+  },
+  "MiniMaxH3AddLatentGuide": {
+    "display_name": "MiniMax H3 Direct Latent Guide (Experimental)",
+    "description": "Copy a valid temporal block directly from one H3 AV latent into another.",
+    "inputs": {
+      "positive": {
+        "name": "Positive"
+      },
+      "target_latent": {
+        "name": "Target Latent"
+      },
+      "source_latent": {
+        "name": "Source Latent"
+      },
+      "guide_frames": {
+        "name": "Guide Frames"
+      },
+      "frame_idx": {
+        "name": "Target Start Frame"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Positive"
+      },
+      "1": {
+        "name": "Experiment Details"
+      }
+    }
+  },
+  "MiniMaxH3VisualDifferenceMetrics": {
+    "display_name": "MiniMax H3 Video Difference Metrics (Experimental)",
+    "description": "Compare two RGB frame batches and report color and pixel differences.",
+    "inputs": {
+      "reference": {
+        "name": "Reference"
+      },
+      "comparison": {
+        "name": "Comparison"
+      },
+      "difference_gain": {
+        "name": "Difference Gain"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Metrics Report"
+      },
+      "1": {
+        "name": "Amplified Difference"
+      }
+    }
+  },
+  "MiniMaxH3WindowedRefine": {
+    "display_name": "MiniMax H3 Windowed Refine",
+    "description": "Second-pass 0.4 to 2.0 on overlapping H3 windows. Each window is 3D-lifted, the previous 2.0 AV tail is re-pinned, then T8 samples at the output canvas. Never encodes the whole 2.0 clip through H3. 12+ segments: connect first-pass Final Video; Merged Frames is an 8x8 stub.",
+    "inputs": {
+      "images": {
+        "name": "Images",
+        "tooltip": "0.4 Merged Frames when the first pass kept them. Optional if First-pass Video is connected."
+      },
+      "model": {
+        "name": "Model"
+      },
+      "clip": {
+        "name": "CLIP"
+      },
+      "vae": {
+        "name": "Video VAE"
+      },
+      "audio_vae": {
+        "name": "Audio VAE"
+      },
+      "sampler": {
+        "name": "Sampler"
+      },
+      "audio": {
+        "name": "Audio"
+      },
+      "finite_plan": {
+        "name": "Finite Segment Plan",
+        "tooltip": "Optional. Supplies canvas size and the 3D upscaler. First-pass boxes longer than Window Frames are split. Raise Window Frames to the segment length to run a whole box if VRAM allows."
+      },
+      "source_video": {
+        "name": "First-pass Video",
+        "tooltip": "Connect the first-pass Final Video. Used when Merged Frames is the 8x8 omit stub (12+ segments)."
+      },
+      "seed": {
+        "name": "Seed"
+      },
+      "output_megapixels": {
+        "name": "Output Megapixels",
+        "tooltip": "Refine canvas. 2.0 is sharpest and heaviest. Drop to 1.5 / 1.0 before picking a longer window or whole 15s."
+      },
+      "upscale_method": {
+        "name": "Upscale Method",
+        "tooltip": "h3_latent: 3D lift (softer, 16GB-safe). nvidia_rtx_vsr: original dual-pass VSR then light T8. Window size is whatever you set on Window Frames. Needs nvidia-vfx."
+      },
+      "refine_denoise": {
+        "name": "Refine Denoise",
+        "tooltip": "T8 denoise after 3D lift. 0 skips T8."
+      },
+      "refine_steps": {
+        "name": "Refine Steps",
+        "tooltip": "0 with h3_latent = 3D lift then decode, no T8 sample."
+      },
+      "clear_vram_between_windows": {
+        "name": "Clear VRAM Between Windows"
+      },
+      "window_frames": {
+        "name": "Window Size",
+        "tooltip": "Dropdown, not a typed number. 5.9s is typical at 2.0 on 16GB. Drop Output Megapixels before picking a longer window or whole 15s.",
+        "options": {
+          "141 (~5.9s)": "5.9s (2.0 / 16GB)",
+          "158 (~6.6s)": "6.6s",
+          "175 (~7.3s)": "7.3s",
+          "192 (~8s)": "8s (whole 8s box)",
+          "243 (~10s)": "10s",
+          "362 (whole 15s)": "whole 15s"
+        }
+      },
+      "overlap_frames": {
+        "name": "Overlap Frames",
+        "tooltip": "H3-legal: 5 / 22 / 39 / 56. 39 ≈ 1.6s, 56 ≈ 2.3s. Exactly 2s (48 frames) is not valid."
+      },
+      "latent_upscale_model": {
+        "name": "Latent Upscale Model",
+        "tooltip": "Used when Upscale Method is h3_latent. auto picks a compatible H3 checkpoint."
+      },
+      "split_long_windows": {
+        "name": "Split Long Lift Windows",
+        "tooltip": "Lift-only: split boxes longer than Window Frames. Off keeps one lift per first-pass box. T8 already splits to Window Frames."
+      },
+      "live_preview": {
+        "name": "Live Preview",
+        "tooltip": "KJ-style tiny-VAE preview on this node while T8 samples. No extra node."
+      },
+      "preview_tiny_vae": {
+        "name": "Preview Tiny VAE",
+        "tooltip": "auto picks MiniMax-H3-TAE.safetensors or taeh3.safetensors. none uses Latent2RGB."
+      },
+      "preview_max_resolution": {
+        "name": "Preview Max Resolution",
+        "tooltip": "Max preview side in pixels. 0 = no downscale."
+      },
+      "preview_frames": {
+        "name": "Preview Frames",
+        "tooltip": "Animated frames per step. 1 = still. Raise toward clip length (e.g. 241) for a full-clip loop."
+      },
+      "preview_fps": {
+        "name": "Preview FPS",
+        "tooltip": "Playback FPS for the animated preview. Ignored when Preview Frames is 1."
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Final Video"
+      },
+      "1": {
+        "name": "Audio"
+      },
+      "2": {
+        "name": "Status"
+      }
+    }
+  },
+  "MiniMaxH3LivePreviewAttach": {
+    "display_name": "MiniMax H3 Live Preview Attach (Internal)",
+    "description": "Internal. Wraps MODEL so sampling previews stream to Finite Segment Sampler or Windowed Refine.",
+    "inputs": {
+      "model": {
+        "name": "Model"
+      },
+      "target_node_id": {
+        "name": "Target Node Id"
+      },
+      "enabled": {
+        "name": "Enabled"
+      },
+      "tiny_vae": {
+        "name": "Tiny VAE"
+      },
+      "max_resolution": {
+        "name": "Max Resolution"
+      },
+      "preview_frames": {
+        "name": "Preview Frames"
+      },
+      "preview_fps": {
+        "name": "Preview FPS"
+      }
+    },
+    "outputs": {
+      "0": {
+        "name": "Model"
+      }
+    }
+  }
+}

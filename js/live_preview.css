@@ -1,0 +1,64 @@
+.h3ss-pov-root {
+    width: 100%;
+    min-height: 220px;
+    height: 260px;
+    position: relative;
+    background: #181818;
+    color: #b0b0b0;
+    font: 12px monospace;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+    border-radius: 4px;
+}
+
+.h3ss-pov-image-area {
+    flex: 1 1 auto;
+    min-height: 140px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    overflow: hidden;
+}
+
+.h3ss-pov-img,
+.h3ss-pov-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    display: block;
+}
+
+.h3ss-pov-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #707070;
+    pointer-events: none;
+    padding: 8px;
+    text-align: center;
+}
+
+.h3ss-pov-bar {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 8px;
+    background: #222;
+    border-top: 1px solid #2a2a2a;
+}
+
+.h3ss-pov-bar span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

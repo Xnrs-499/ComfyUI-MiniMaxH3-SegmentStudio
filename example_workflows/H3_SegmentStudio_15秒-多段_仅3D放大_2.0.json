@@ -1,0 +1,1495 @@
+{
+  "id": "629d38a7-f610-4277-8238-f1596622e366",
+  "revision": 0,
+  "last_node_id": 350,
+  "last_link_id": 232,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "KSamplerSelect",
+      "pos": [
+        365.4583132954002,
+        25.285627838844153
+      ],
+      "size": [
+        369.63595585539855,
+        58
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "采样器名称",
+          "name": "sampler_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "sampler_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "采样器",
+          "name": "SAMPLER",
+          "type": "SAMPLER",
+          "links": [
+            18,
+            231
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "KSamplerSelect"
+      },
+      "widgets_values": [
+        "euler"
+      ],
+      "widgets_values_named": {
+        "sampler_name": "euler"
+      },
+      "title": "采样器"
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        356.1242212327883,
+        -523.3652584485711
+      ],
+      "size": [
+        533.4619044534146,
+        185.36161407223096
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "CLIP名称",
+          "name": "clip_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "clip_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "类型",
+          "name": "type",
+          "type": "COMBO",
+          "widget": {
+            "name": "type"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "设备",
+          "name": "device",
+          "shape": 7,
+          "type": "COMBO",
+          "widget": {
+            "name": "device"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            14,
+            228
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "minimax",
+        "default"
+      ],
+      "widgets_values_named": {
+        "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+        "type": "minimax",
+        "device": "default"
+      },
+      "title": "CLIP 加载"
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        359.0139001174842,
+        -268.84887694941614
+      ],
+      "size": [
+        368.046875,
+        86
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "vae名称",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            15,
+            229
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_video_vae_fp16.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+      },
+      "title": "视频 VAE"
+    },
+    {
+      "id": 4,
+      "type": "VAELoader",
+      "pos": [
+        359.60512963239796,
+        -127.16289100437982
+      ],
+      "size": [
+        373.609375,
+        86
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "vae名称",
+          "name": "vae_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "vae_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "VAE",
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            16,
+            230
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "minimax_h3_audio_vae_fp32.safetensors"
+      ],
+      "widgets_values_named": {
+        "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+      },
+      "title": "音频 VAE"
+    },
+    {
+      "id": 5,
+      "type": "BasicScheduler",
+      "pos": [
+        1344.8475589520076,
+        -746.6826054759684
+      ],
+      "size": [
+        270,
+        142
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 31
+        },
+        {
+          "localized_name": "调度器",
+          "name": "scheduler",
+          "type": "COMBO",
+          "widget": {
+            "name": "scheduler"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "步数",
+          "name": "steps",
+          "type": "INT",
+          "widget": {
+            "name": "steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "降噪",
+          "name": "denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "denoise"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Sigmas",
+          "name": "SIGMAS",
+          "type": "SIGMAS",
+          "links": [
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "BasicScheduler"
+      },
+      "widgets_values": [
+        "simple",
+        8,
+        1
+      ],
+      "widgets_values_named": {
+        "scheduler": "simple",
+        "steps": 8,
+        "denoise": 1
+      },
+      "title": "一采调度"
+    },
+    {
+      "id": 8,
+      "type": "MiniMaxH3FiniteSegmentSampler",
+      "pos": [
+        1208.2346471417604,
+        -510.65659621850773
+      ],
+      "size": [
+        417.6139310796283,
+        674
+      ],
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 38
+        },
+        {
+          "localized_name": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 14
+        },
+        {
+          "localized_name": "视频 VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 15
+        },
+        {
+          "localized_name": "音频 VAE",
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 16
+        },
+        {
+          "localized_name": "有限分段规划",
+          "name": "finite_plan",
+          "type": "MINIMAX_H3_FINITE_SEGMENT_PLAN",
+          "link": 17
+        },
+        {
+          "localized_name": "采样器",
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 18
+        },
+        {
+          "localized_name": "Sigmas",
+          "name": "sigmas",
+          "type": "SIGMAS",
+          "link": 19
+        },
+        {
+          "localized_name": "脸部二次优化",
+          "name": "face_refine",
+          "shape": 7,
+          "type": "MMX_DIR_FACE_REFINE",
+          "link": null
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "续接音频 Latent",
+          "name": "continue_audio_latent",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "continue_audio_latent"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "参考图尺寸",
+          "name": "ref_image_size",
+          "type": "COMBO",
+          "widget": {
+            "name": "ref_image_size"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "导出方式",
+          "name": "export_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "export_mode"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "输出百万像素",
+          "name": "output_megapixels",
+          "type": "FLOAT",
+          "widget": {
+            "name": "output_megapixels"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "超分方式",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "widget": {
+            "name": "upscale_method"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "二采 denoise",
+          "name": "refine_denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "refine_denoise"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "二采步数",
+          "name": "refine_steps",
+          "type": "INT",
+          "widget": {
+            "name": "refine_steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "执行方式",
+          "name": "execution_mode",
+          "type": "COMBO",
+          "widget": {
+            "name": "execution_mode"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "段间清理显存",
+          "name": "clear_vram_between_segments",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "clear_vram_between_segments"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "缓存文件夹名",
+          "name": "cache_name",
+          "type": "STRING",
+          "widget": {
+            "name": "cache_name"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "末段采样 Latent",
+          "name": "Last Sampled Latent",
+          "type": "LATENT",
+          "links": []
+        },
+        {
+          "localized_name": "合并画面",
+          "name": "Merged Frames",
+          "type": "IMAGE",
+          "links": [
+            224
+          ]
+        },
+        {
+          "localized_name": "合并音频",
+          "name": "Merged Audio",
+          "type": "AUDIO",
+          "links": [
+            225
+          ]
+        },
+        {
+          "localized_name": "采样状态",
+          "name": "Sampling Status",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "localized_name": "Final Video",
+          "name": "Final Video",
+          "type": "VIDEO",
+          "links": [
+            223,
+            233
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector",
+        "ver": "bad313e7e1a7eb300a23aac9f094da63fb536430",
+        "Node name for S&R": "MiniMaxH3FiniteSegmentSampler"
+      },
+      "widgets_values": [
+        42,
+        "fixed",
+        true,
+        "match",
+        "segments",
+        0,
+        "nvidia_rtx_vsr",
+        0,
+        0,
+        "sequential",
+        true,
+        "15秒-多段3D"
+      ],
+      "widgets_values_named": {
+        "seed": 42,
+        "control_after_generate": "fixed",
+        "continue_audio_latent": true,
+        "ref_image_size": "match",
+        "export_mode": "segments",
+        "output_megapixels": 0,
+        "upscale_method": "nvidia_rtx_vsr",
+        "refine_denoise": 0,
+        "refine_steps": 0,
+        "execution_mode": "sequential",
+        "clear_vram_between_segments": true,
+        "cache_name": "15秒-多段3D"
+      },
+      "title": "一采 · 15秒-多段（0.4）"
+    },
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        351.9687279830819,
+        -744.4294284009655
+      ],
+      "size": [
+        676.2520334367211,
+        171.59417327632514
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "UNet名称",
+          "name": "unet_name",
+          "type": "COMBO",
+          "widget": {
+            "name": "unet_name"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "数据类型",
+          "name": "weight_dtype",
+          "type": "COMBO",
+          "widget": {
+            "name": "weight_dtype"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            30
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors",
+        "default"
+      ],
+      "widgets_values_named": {
+        "unet_name": "minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors",
+        "weight_dtype": "default"
+      },
+      "title": "UNET 加载"
+    },
+    {
+      "id": 17,
+      "type": "PathchSageAttentionKJ",
+      "pos": [
+        1046.3344502617138,
+        -737.8910146744001
+      ],
+      "size": [
+        269.9999552920744,
+        114.00000895964715
+      ],
+      "flags": {
+        "collapsed": false
+      },
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 30
+        },
+        {
+          "localized_name": "sage_attention",
+          "name": "sage_attention",
+          "type": "COMBO",
+          "widget": {
+            "name": "sage_attention"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "allow_compile",
+          "name": "allow_compile",
+          "shape": 7,
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "allow_compile"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "模型",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            31,
+            38,
+            227
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-kjnodes",
+        "ver": "3f20054214fec9f9234fd3841ae6f1e4287948f6",
+        "Node name for S&R": "PathchSageAttentionKJ"
+      },
+      "widgets_values": [
+        "auto",
+        false
+      ],
+      "widgets_values_named": {
+        "sage_attention": "auto",
+        "allow_compile": false
+      },
+      "title": "SageAttention"
+    },
+    {
+      "id": 7,
+      "type": "MiniMaxH3TimelinePlanner",
+      "pos": [
+        249.44189918563328,
+        267.3569475731788
+      ],
+      "size": [
+        1459.8988568911595,
+        824
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "导入预设",
+          "name": "import_preset",
+          "shape": 7,
+          "type": "MINIMAX_H3_TIMELINE_PRESET",
+          "link": null
+        },
+        {
+          "localized_name": "提示词序号",
+          "name": "prompt_index",
+          "shape": 7,
+          "type": "INT",
+          "link": null
+        },
+        {
+          "localized_name": "宽度",
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "高度",
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "生成时长",
+          "name": "generation_seconds",
+          "type": "FLOAT",
+          "widget": {
+            "name": "generation_seconds"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "时间线数据",
+          "name": "timeline_data",
+          "type": "STRING",
+          "widget": {
+            "name": "timeline_data"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "素材规划",
+          "name": "Material Plan",
+          "type": "MINIMAX_H3_TIMELINE_PLAN",
+          "links": []
+        },
+        {
+          "localized_name": "Omni 素材包",
+          "name": "Omni Media Bundle",
+          "type": "MINIMAX_H3_OMNI_MEDIA_BUNDLE",
+          "links": []
+        },
+        {
+          "localized_name": "分段规划",
+          "name": "Segment Plan",
+          "type": "MINIMAX_H3_FINITE_SEGMENT_PLAN",
+          "links": [
+            17,
+            226
+          ]
+        }
+      ],
+      "properties": {
+        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector",
+        "ver": "bad313e7e1a7eb300a23aac9f094da63fb536430",
+        "Node name for S&R": "MiniMaxH3TimelinePlanner"
+      },
+      "widgets_values": [
+        864,
+        480,
+        10.1,
+        "{\"version\":9,\"fps\":24,\"globalPrompt\":\"\",\"secondPass\":false,\"secondPassModel\":\"minimax_h3_latent_upscaler_3d_bf16.safetensors\",\"secondPassHighSteps\":2,\"selection\":{\"start\":14.875,\"duration\":10.125},\"videoAudioEnabled\":true,\"videoClips\":[],\"images\":[{\"id\":\"mv2f43ly-dnoaeg\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180219_5waqi_Krea2-USD-20261010172041_00001_.png\",\"name\":\"Krea2-USD-20261010172041_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44dh-lseypa\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181223_yjk17_Krea2-USD-20261010173146_00001_.png\",\"name\":\"Krea2-USD-20261010173146_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43cy-r5lzxv\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180023_wsglu_Krea2-USD-20261010170202_00001_.png\",\"name\":\"Krea2-USD-20261010170202_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f4542-jh5irg\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182143_sgfnz_Krea2-USD-20261010173802_00001_.png\",\"name\":\"Krea2-USD-20261010173802_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44jf-xqaz6y\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181430_1kgta_Krea2-USD-20261010173307_00001_.png\",\"name\":\"Krea2-USD-20261010173307_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f447p-qti9fi\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181017_lxtax_Krea2-USD-20261010173025_00001_.png\",\"name\":\"Krea2-USD-20261010173025_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f441x-xx9odn\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180813_0gkvo_Krea2-USD-20261010172707_00001_.png\",\"name\":\"Krea2-USD-20261010172707_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44x8-89isim\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181925_2o8xv_Krea2-USD-20261010173534_00001_.png\",\"name\":\"Krea2-USD-20261010173534_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44ql-nznyly\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181645_madov_Krea2-USD-20261010173419_00001_.png\",\"name\":\"Krea2-USD-20261010173419_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43r0-4mxxbq\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180439_z00k9_Krea2-USD-20261010172206_00001_.png\",\"name\":\"Krea2-USD-20261010172206_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45a0-3h46r4\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182387_6efsm_Krea2-USD-20261010173913_00001_.png\",\"name\":\"Krea2-USD-20261010173913_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45gs-tlsoci\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182602_302t5_Krea2-USD-20261010174028_00001_.png\",\"name\":\"Krea2-USD-20261010174028_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45vl-oebw0p\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183107_oicff_Krea2-USD-20261010174405_00001_.png\",\"name\":\"Krea2-USD-20261010174405_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45nw-p588c5\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182846_k53nm_Krea2-USD-20261010174242_00001_.png\",\"name\":\"Krea2-USD-20261010174242_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f463u-zjcj9v\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183379_ykfm4_Krea2-USD-20261010174521_00001_.png\",\"name\":\"Krea2-USD-20261010174521_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f46oy-iy16mn\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183998_9m8zd_Krea2-USD-20261010174838_00001_.png\",\"name\":\"Krea2-USD-20261010174838_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43fr-wfwcxq\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180116_ncek9_Krea2-USD-20261010171015_00001_.png\",\"name\":\"Krea2-USD-20261010171015_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f46cs-f8fvxp\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183678_gro99_Krea2-USD-20261010174724_00001_.png\",\"name\":\"Krea2-USD-20261010174724_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43wd-t248dt\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180623_jx25a_Krea2-USD-20261010172326_00001_.png\",\"name\":\"Krea2-USD-20261010172326_00001_.png\",\"width\":1536,\"height\":2736}],\"audios\":[],\"segmentConfig\":{\"count\":3,\"activeIndex\":2,\"mode\":\"timeline\",\"segments\":[{\"images\":[\"mv2f43ly-dnoaeg\",\"mv2f44dh-lseypa\"],\"audios\":[],\"prompt\":\"3D animated film rendering, cinematic lighting, high-detail stylized character model, soft subsurface\\nscattering on skin, painterly yet realistic materials, volumetric light, 16:9 widescreen composition,\\nshallow depth of field, subtle film grain, natural motion blur, 24fps cinematic feel.\\nTONE: cold blue-grey dominant (~80%), sky cold blue-grey, shadows lean blue, dark areas keep deep blue-grey\\ntexture (never pure black); red is the only saturated accent (character's signature dress/scarf), no other\\nsaturated color; warm light only from a real physical source, warm share <10%.\\nTEXTURE: Kodak-like film emulation, fine organic grain, anamorphic-style oval bokeh, fabric fibers visible,\\nhair strands layered, contact shadows under all objects, no plastic skin.\\nPHYSICAL CAMERA: physical camera + anamorphic lens feel, consistent motion blur, natural depth of field,\\nno CG plastic look, no 2D flat shading.\\nLIGHT-SKIN INTERACTION: sky light from above/side casts the top of the head and one shoulder in cold\\nblue-grey; ground reflection lifts dim cold light onto the jaw and under-chin; eye sockets sit in shadow\\nunder the brow bone; rim light on the lit shoulder from the real source; two temperature zones on skin\\n(cold dominant, warm accent only where the real source hits).\\nMOTION PHYSICS: every action written as a full-body chain (driver + stabilizer + compensator + involuntary\\nbreath/blink/micro-sway); no emotional words — express feelings as visible muscle and body movements;\\nstanding still still shows weight-shift, arm position, breathing, 2-3mm sway.\\nENVIRONMENT DYNAMICS: at least 3-4 moving elements per shot (wind, dust, fog, light shafts, reflections,\\ndistant people), Tyndall beams where light and particles both exist.\\n4-LAYER FRAME: foreground (0-2m) + midground characters (2-8m) + background (8m+) + air layer (dust, mist,\\ntemperature effects) all filled every second.\\nSTRICT CAST: exactly 2 human characters in frame, no clones, no extra characters.\\nNEGATIVE: no character identity drift, no extra characters, no text/watermark/logo, no 2D flat shading,\\nno chibi proportions, no plastic skin, no over-saturation, no sourceless warm light, no pure black shadows,\\nno frame skipping, no extra limbs, no deformed hands.\\n\\nSHOT / CAMERA: Big Close-Up → Close-Up · 缓慢推近（虚焦起，焦点渐清）\\n- [0-2s] 前景层：白色氧气面罩边缘泛冷光，管体反光；中景层：白发老人侧脸大特写，眼睑闭合，睫毛微颤，胸腔随呼吸机节奏起伏；背景层：病房白墙与监护仪模糊成冷灰蓝色块；空气层：窗光中微尘悬浮，冷光从画面左上窗侧打入，鼻梁与颧骨受冷光，眼窝阴影深，下颌下方暗灰。\\n- [2-4s] 焦点渐清：老人眼睑缓缓睁开，视线先向上（看向天花板），眼球缓慢转动，眨眼一次；指尖在床单上微动；空气层尘埃在光柱中缓慢流动（丁达尔）。\\n- [4-6s] 画面右侧出现一位虚焦人影，红色长裙轮廓在冷蓝病房中清晰可辨（唯一高饱和），人影俯身靠近床边，头戴轮廓在老人视野边缘；老人视线缓慢转向右侧人影方向，瞳孔微收。\\n- [6-8s] 人影伸手（虚焦）触碰老人手背，老人手指微曲；镜头缓推至老人眼部大特写，视线聚焦在红裙人影方向，眼睑半垂；画面边缘开始泛白（叠化准备）。\\n\\nAUDIO & SOUND: 极简钢琴单音（冷）；心电监护仪缓慢滴声（真实音源）；呼吸机气流声；孙女（20岁明亮年轻女声，由远渐近带哭腔）：\\\"爷爷！爷爷！\\\"；末 1s 高频淡入叠化音。\\n\\nLIMITS: no extra characters（画面只允许老人与虚焦红裙人影，禁止出现第三张脸）；no text on monitor（监护仪屏幕空白无文字）；红裙为唯一高饱和色，画面其余全部冷灰蓝；no 2D flat shading；no chibi；no pure black shadows。\",\"startFrame\":0,\"endFrame\":192},{\"images\":[\"mv2f43cy-r5lzxv\",\"mv2f4542-jh5irg\"],\"audios\":[],\"prompt\":\"3D animated film rendering, cinematic lighting, high-detail stylized character model, soft subsurface\\nscattering on skin, painterly yet realistic materials, volumetric light, 16:9 widescreen composition,\\nshallow depth of field, subtle film grain, natural motion blur, 24fps cinematic feel.\\nTONE: cold blue-grey dominant (~80%), sky cold blue-grey, shadows lean blue, dark areas keep deep blue-grey\\ntexture (never pure black); red is the only saturated accent (character's signature dress/scarf), no other\\nsaturated color; warm light only from a real physical source, warm share <10%.\\nTEXTURE: Kodak-like film emulation, fine organic grain, anamorphic-style oval bokeh, fabric fibers visible,\\nhair strands layered, contact shadows under all objects, no plastic skin.\\nPHYSICAL CAMERA: physical camera + anamorphic lens feel, consistent motion blur, natural depth of field,\\nno CG plastic look, no 2D flat shading.\\nLIGHT-SKIN INTERACTION: sky light from above/side casts the top of the head and one shoulder in cold\\nblue-grey; ground reflection lifts dim cold light onto the jaw and under-chin; eye sockets sit in shadow\\nunder the brow bone; rim light on the lit shoulder from the real source; two temperature zones on skin\\n(cold dominant, warm accent only where the real source hits).\\nMOTION PHYSICS: every action written as a full-body chain (driver + stabilizer + compensator + involuntary\\nbreath/blink/micro-sway); no emotional words — express feelings as visible muscle and body movements;\\nstanding still still shows weight-shift, arm position, breathing, 2-3mm sway.\\nENVIRONMENT DYNAMICS: at least 3-4 moving elements per shot (wind, dust, fog, light shafts, reflections,\\ndistant people), Tyndall beams where light and particles both exist.\\n4-LAYER FRAME: foreground (0-2m) + midground characters (2-8m) + background (8m+) + air layer (dust, mist,\\ntemperature effects) all filled every second.\\nSTRICT CAST: exactly 1 human characters in frame, no clones, no extra characters.\\nNEGATIVE: no character identity drift, no extra characters, no text/watermark/logo, no 2D flat shading,\\nno chibi proportions, no plastic skin, no over-saturation, no sourceless warm light, no pure black shadows,\\nno frame skipping, no extra limbs, no deformed hands.\\n\\nSHOT / CAMERA: Medium Shot → Wide Shot · 缓拉（Locked-off 起，缓慢 Dolly Out）\\n- [0-3s] 中景层：男主立于落地窗前，白衬衫袖口挽起，左手扶窗框，右肩自然下垂，视线看向窗外天际线；冷蓝晨光从窗侧打入，头顶与右肩偏冷蓝灰，窗棂阴影横切面部；前景层：窗台边缘反光，桌面文件纸角在气流中微颤；背景层：窗外城市楼群玻璃幕墙反光；空气层：晨光中微尘与窗帘边缘轻动。\\n- [3-7s] 缓拉展开：男主下巴微抬 3cm，嘴唇微张，胸腔吸入一口气，视线固定在天际线方向；左手从窗框滑下，转身面向工位方向；衬衫下摆随转身微摆。\\n- [7-10s] 全景：他迈步走向工位，步伐轻快，左脚前迈右手摆臂自然，坐进工位椅，双手搭上键盘，抬头再看一眼窗外；晨光角度不变，窗外一朵云缓缓移过玻璃幕墙。\\n\\nAUDIO & SOUND: 城市清晨环境音（远处车流、咖啡机蒸汽）；键盘敲击声；男主（22岁清亮偏薄少年声，自言自语带憧憬，轻声）：\\\"终于……成为大人了啊。\\\"；窗外鸟鸣。\\n\\nLIMITS: no extra characters（画面只有男主一人）；no text/logo/watermark；暖光占比 <10% 且必须来自晨光真实光源；no pure black shadows；no 2D flat shading。\\n```\",\"startFrame\":153,\"endFrame\":396},{\"images\":[\"mv2f43ly-dnoaeg\",\"mv2f44jf-xqaz6y\",\"mv2f4542-jh5irg\"],\"audios\":[],\"prompt\":\"3D动画电影渲染、电影光影、高细节风格化角色模型、软底表\\n散布在皮肤上，画意般却又写实的材质，体积光，16：9宽银幕构图，\\n浅景深、细腻的胶片颗粒、自然的运动模糊、24fps的电影感。\\n色调：冷蓝灰色为主（~80%），天空冷蓝灰色，阴影偏蓝色，深色区域保持深蓝灰色\\n纹理（绝非纯黑）;红色是唯一饱和的点缀（角色标志性的连衣裙/围巾），没有其他\\n饱和色彩;只有来自真实物理光源的暖光，热的比例<10%。\\n质感：柯达式胶片仿真，细腻有机颗粒，变形宽银幕风格的椭圆形散景，织物纤维可见，\\n头发分层叠放，所有物体下方都有接触阴影，没有塑料皮肤。\\n物理相机：物理相机+变形镜头感觉，稳定的运动模糊，自然景深，\\n没有CG塑料效果，没有2D平面着色。\\n浅肤互动：从上方/侧面透进的天空光，将头顶和一侧肩膀投射到寒冷中\\n蓝灰色;地面反射将微弱的冷光提升到下颌和下巴下方;眼窝隐匿于阴影中\\n眉骨下方;来自真实光源的肩部轮廓灯;皮肤上的两个温度区\\n（冷主导，只有真正源泉击中的地方才用暖音）。\\n运动物理：每个动作都以全体链条（驱动器+稳定器+补偿器+非自愿）来表示\\n呼吸/眨眼/微摇晃）;没有情感词汇——通过可见的肌肉和身体动作来表达情感;\\n静止不动时会显示体重转移、手臂位置、呼吸、2-3毫米的摇晃。\\n环境动态：每张照片至少有3-4个移动元素（风、尘埃、雾、光束、反射，\\nTyndall光束，光与粒子同时存在。\\n四层帧：前景（0-2米）+ 中景角色（2-8米）+ 背景（8米+）+ 空气层（尘埃、雾气，\\n温度效应）每秒都充满。\\n严格演员阵容：画面中只有两个人类角色，没有克隆人，没有额外角色。\\n缺点：没有角色身份漂移，没有额外字符，没有文字/水印/标志，没有二维平面阴影，\\n没有Q版比例，没有塑料皮肤，没有过饱和度，没有无源的温暖光线，没有纯粹的黑色阴影，\\n没有跳帧，没有多余的肢体，没有变形的手。\\n\\n镜头/摄影：中特写 → 特写 ·手持微晃 + 急推\\n- [0-3s] 中景层：老板立于男主工位旁，单手拍桌，桌面水杯水面晃动，冷白顶光从上压下，发际线反光，眉骨投下阴影，嘴部开合（训斥）；前景层：桌面文件与键盘边缘清晰，杯沿反光；背景层：同事虚影在隔间后交头接耳；空气层：顶光下微尘可见，荧光灯管偶发一次频闪。\\n- [3-7s] 急推至特写：老板嘴部继续开合，眉头下压，下颌线绷紧，手指点向桌面文件；镜头随拍桌节奏微晃。\\n- [7-10s] 切图1近景：他低头，视线垂向桌面，双肩内缩，右手手指攥紧又松开，喉结吞咽一次；冷白顶光在他眼窝投下深阴影；背景同事虚影仍在移动；画面右缘窗外灰白天光。\\n\\n音频与声音：低频弦乐持续低鸣（压迫感）;拍桌闷响、水杯震动声;老板（45岁低沉压迫中年男声，鼻音重、语速慢而有力，怒）：“这方案改了三版了，还是这个鬼样子！今晚改不完，你就别下班了！”;同事低语声（年轻男声群，模糊）;荧光灯频闪的“嗡”声。\\n\\n限制：无对焦中额外字符（焦点只允许老板与男主，同事一律虚影）;无文字/标志;顶光唯一光源，无暖光;无纯黑阴影;无二维平面阴影。\",\"startFrame\":357,\"endFrame\":600}]}}",
+        ""
+      ],
+      "widgets_values_named": {
+        "width": 864,
+        "height": 480,
+        "generation_seconds": 10.1,
+        "timeline_data": "{\"version\":9,\"fps\":24,\"globalPrompt\":\"\",\"secondPass\":false,\"secondPassModel\":\"minimax_h3_latent_upscaler_3d_bf16.safetensors\",\"secondPassHighSteps\":2,\"selection\":{\"start\":14.875,\"duration\":10.125},\"videoAudioEnabled\":true,\"videoClips\":[],\"images\":[{\"id\":\"mv2f43ly-dnoaeg\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180219_5waqi_Krea2-USD-20261010172041_00001_.png\",\"name\":\"Krea2-USD-20261010172041_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44dh-lseypa\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181223_yjk17_Krea2-USD-20261010173146_00001_.png\",\"name\":\"Krea2-USD-20261010173146_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43cy-r5lzxv\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180023_wsglu_Krea2-USD-20261010170202_00001_.png\",\"name\":\"Krea2-USD-20261010170202_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f4542-jh5irg\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182143_sgfnz_Krea2-USD-20261010173802_00001_.png\",\"name\":\"Krea2-USD-20261010173802_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44jf-xqaz6y\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181430_1kgta_Krea2-USD-20261010173307_00001_.png\",\"name\":\"Krea2-USD-20261010173307_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f447p-qti9fi\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181017_lxtax_Krea2-USD-20261010173025_00001_.png\",\"name\":\"Krea2-USD-20261010173025_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f441x-xx9odn\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180813_0gkvo_Krea2-USD-20261010172707_00001_.png\",\"name\":\"Krea2-USD-20261010172707_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44x8-89isim\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181925_2o8xv_Krea2-USD-20261010173534_00001_.png\",\"name\":\"Krea2-USD-20261010173534_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f44ql-nznyly\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638181645_madov_Krea2-USD-20261010173419_00001_.png\",\"name\":\"Krea2-USD-20261010173419_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43r0-4mxxbq\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180439_z00k9_Krea2-USD-20261010172206_00001_.png\",\"name\":\"Krea2-USD-20261010172206_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45a0-3h46r4\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182387_6efsm_Krea2-USD-20261010173913_00001_.png\",\"name\":\"Krea2-USD-20261010173913_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45gs-tlsoci\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182602_302t5_Krea2-USD-20261010174028_00001_.png\",\"name\":\"Krea2-USD-20261010174028_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45vl-oebw0p\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183107_oicff_Krea2-USD-20261010174405_00001_.png\",\"name\":\"Krea2-USD-20261010174405_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f45nw-p588c5\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638182846_k53nm_Krea2-USD-20261010174242_00001_.png\",\"name\":\"Krea2-USD-20261010174242_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f463u-zjcj9v\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183379_ykfm4_Krea2-USD-20261010174521_00001_.png\",\"name\":\"Krea2-USD-20261010174521_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f46oy-iy16mn\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183998_9m8zd_Krea2-USD-20261010174838_00001_.png\",\"name\":\"Krea2-USD-20261010174838_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43fr-wfwcxq\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180116_ncek9_Krea2-USD-20261010171015_00001_.png\",\"name\":\"Krea2-USD-20261010171015_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f46cs-f8fvxp\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638183678_gro99_Krea2-USD-20261010174724_00001_.png\",\"name\":\"Krea2-USD-20261010174724_00001_.png\",\"width\":1536,\"height\":2736},{\"id\":\"mv2f43wd-t248dt\",\"file\":\"minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/1791638180623_jx25a_Krea2-USD-20261010172326_00001_.png\",\"name\":\"Krea2-USD-20261010172326_00001_.png\",\"width\":1536,\"height\":2736}],\"audios\":[],\"segmentConfig\":{\"count\":3,\"activeIndex\":2,\"mode\":\"timeline\",\"segments\":[{\"images\":[\"mv2f43ly-dnoaeg\",\"mv2f44dh-lseypa\"],\"audios\":[],\"prompt\":\"3D animated film rendering, cinematic lighting, high-detail stylized character model, soft subsurface\\nscattering on skin, painterly yet realistic materials, volumetric light, 16:9 widescreen composition,\\nshallow depth of field, subtle film grain, natural motion blur, 24fps cinematic feel.\\nTONE: cold blue-grey dominant (~80%), sky cold blue-grey, shadows lean blue, dark areas keep deep blue-grey\\ntexture (never pure black); red is the only saturated accent (character's signature dress/scarf), no other\\nsaturated color; warm light only from a real physical source, warm share <10%.\\nTEXTURE: Kodak-like film emulation, fine organic grain, anamorphic-style oval bokeh, fabric fibers visible,\\nhair strands layered, contact shadows under all objects, no plastic skin.\\nPHYSICAL CAMERA: physical camera + anamorphic lens feel, consistent motion blur, natural depth of field,\\nno CG plastic look, no 2D flat shading.\\nLIGHT-SKIN INTERACTION: sky light from above/side casts the top of the head and one shoulder in cold\\nblue-grey; ground reflection lifts dim cold light onto the jaw and under-chin; eye sockets sit in shadow\\nunder the brow bone; rim light on the lit shoulder from the real source; two temperature zones on skin\\n(cold dominant, warm accent only where the real source hits).\\nMOTION PHYSICS: every action written as a full-body chain (driver + stabilizer + compensator + involuntary\\nbreath/blink/micro-sway); no emotional words — express feelings as visible muscle and body movements;\\nstanding still still shows weight-shift, arm position, breathing, 2-3mm sway.\\nENVIRONMENT DYNAMICS: at least 3-4 moving elements per shot (wind, dust, fog, light shafts, reflections,\\ndistant people), Tyndall beams where light and particles both exist.\\n4-LAYER FRAME: foreground (0-2m) + midground characters (2-8m) + background (8m+) + air layer (dust, mist,\\ntemperature effects) all filled every second.\\nSTRICT CAST: exactly 2 human characters in frame, no clones, no extra characters.\\nNEGATIVE: no character identity drift, no extra characters, no text/watermark/logo, no 2D flat shading,\\nno chibi proportions, no plastic skin, no over-saturation, no sourceless warm light, no pure black shadows,\\nno frame skipping, no extra limbs, no deformed hands.\\n\\nSHOT / CAMERA: Big Close-Up → Close-Up · 缓慢推近（虚焦起，焦点渐清）\\n- [0-2s] 前景层：白色氧气面罩边缘泛冷光，管体反光；中景层：白发老人侧脸大特写，眼睑闭合，睫毛微颤，胸腔随呼吸机节奏起伏；背景层：病房白墙与监护仪模糊成冷灰蓝色块；空气层：窗光中微尘悬浮，冷光从画面左上窗侧打入，鼻梁与颧骨受冷光，眼窝阴影深，下颌下方暗灰。\\n- [2-4s] 焦点渐清：老人眼睑缓缓睁开，视线先向上（看向天花板），眼球缓慢转动，眨眼一次；指尖在床单上微动；空气层尘埃在光柱中缓慢流动（丁达尔）。\\n- [4-6s] 画面右侧出现一位虚焦人影，红色长裙轮廓在冷蓝病房中清晰可辨（唯一高饱和），人影俯身靠近床边，头戴轮廓在老人视野边缘；老人视线缓慢转向右侧人影方向，瞳孔微收。\\n- [6-8s] 人影伸手（虚焦）触碰老人手背，老人手指微曲；镜头缓推至老人眼部大特写，视线聚焦在红裙人影方向，眼睑半垂；画面边缘开始泛白（叠化准备）。\\n\\nAUDIO & SOUND: 极简钢琴单音（冷）；心电监护仪缓慢滴声（真实音源）；呼吸机气流声；孙女（20岁明亮年轻女声，由远渐近带哭腔）：\\\"爷爷！爷爷！\\\"；末 1s 高频淡入叠化音。\\n\\nLIMITS: no extra characters（画面只允许老人与虚焦红裙人影，禁止出现第三张脸）；no text on monitor（监护仪屏幕空白无文字）；红裙为唯一高饱和色，画面其余全部冷灰蓝；no 2D flat shading；no chibi；no pure black shadows。\",\"startFrame\":0,\"endFrame\":192},{\"images\":[\"mv2f43cy-r5lzxv\",\"mv2f4542-jh5irg\"],\"audios\":[],\"prompt\":\"3D animated film rendering, cinematic lighting, high-detail stylized character model, soft subsurface\\nscattering on skin, painterly yet realistic materials, volumetric light, 16:9 widescreen composition,\\nshallow depth of field, subtle film grain, natural motion blur, 24fps cinematic feel.\\nTONE: cold blue-grey dominant (~80%), sky cold blue-grey, shadows lean blue, dark areas keep deep blue-grey\\ntexture (never pure black); red is the only saturated accent (character's signature dress/scarf), no other\\nsaturated color; warm light only from a real physical source, warm share <10%.\\nTEXTURE: Kodak-like film emulation, fine organic grain, anamorphic-style oval bokeh, fabric fibers visible,\\nhair strands layered, contact shadows under all objects, no plastic skin.\\nPHYSICAL CAMERA: physical camera + anamorphic lens feel, consistent motion blur, natural depth of field,\\nno CG plastic look, no 2D flat shading.\\nLIGHT-SKIN INTERACTION: sky light from above/side casts the top of the head and one shoulder in cold\\nblue-grey; ground reflection lifts dim cold light onto the jaw and under-chin; eye sockets sit in shadow\\nunder the brow bone; rim light on the lit shoulder from the real source; two temperature zones on skin\\n(cold dominant, warm accent only where the real source hits).\\nMOTION PHYSICS: every action written as a full-body chain (driver + stabilizer + compensator + involuntary\\nbreath/blink/micro-sway); no emotional words — express feelings as visible muscle and body movements;\\nstanding still still shows weight-shift, arm position, breathing, 2-3mm sway.\\nENVIRONMENT DYNAMICS: at least 3-4 moving elements per shot (wind, dust, fog, light shafts, reflections,\\ndistant people), Tyndall beams where light and particles both exist.\\n4-LAYER FRAME: foreground (0-2m) + midground characters (2-8m) + background (8m+) + air layer (dust, mist,\\ntemperature effects) all filled every second.\\nSTRICT CAST: exactly 1 human characters in frame, no clones, no extra characters.\\nNEGATIVE: no character identity drift, no extra characters, no text/watermark/logo, no 2D flat shading,\\nno chibi proportions, no plastic skin, no over-saturation, no sourceless warm light, no pure black shadows,\\nno frame skipping, no extra limbs, no deformed hands.\\n\\nSHOT / CAMERA: Medium Shot → Wide Shot · 缓拉（Locked-off 起，缓慢 Dolly Out）\\n- [0-3s] 中景层：男主立于落地窗前，白衬衫袖口挽起，左手扶窗框，右肩自然下垂，视线看向窗外天际线；冷蓝晨光从窗侧打入，头顶与右肩偏冷蓝灰，窗棂阴影横切面部；前景层：窗台边缘反光，桌面文件纸角在气流中微颤；背景层：窗外城市楼群玻璃幕墙反光；空气层：晨光中微尘与窗帘边缘轻动。\\n- [3-7s] 缓拉展开：男主下巴微抬 3cm，嘴唇微张，胸腔吸入一口气，视线固定在天际线方向；左手从窗框滑下，转身面向工位方向；衬衫下摆随转身微摆。\\n- [7-10s] 全景：他迈步走向工位，步伐轻快，左脚前迈右手摆臂自然，坐进工位椅，双手搭上键盘，抬头再看一眼窗外；晨光角度不变，窗外一朵云缓缓移过玻璃幕墙。\\n\\nAUDIO & SOUND: 城市清晨环境音（远处车流、咖啡机蒸汽）；键盘敲击声；男主（22岁清亮偏薄少年声，自言自语带憧憬，轻声）：\\\"终于……成为大人了啊。\\\"；窗外鸟鸣。\\n\\nLIMITS: no extra characters（画面只有男主一人）；no text/logo/watermark；暖光占比 <10% 且必须来自晨光真实光源；no pure black shadows；no 2D flat shading。\\n```\",\"startFrame\":153,\"endFrame\":396},{\"images\":[\"mv2f43ly-dnoaeg\",\"mv2f44jf-xqaz6y\",\"mv2f4542-jh5irg\"],\"audios\":[],\"prompt\":\"3D动画电影渲染、电影光影、高细节风格化角色模型、软底表\\n散布在皮肤上，画意般却又写实的材质，体积光，16：9宽银幕构图，\\n浅景深、细腻的胶片颗粒、自然的运动模糊、24fps的电影感。\\n色调：冷蓝灰色为主（~80%），天空冷蓝灰色，阴影偏蓝色，深色区域保持深蓝灰色\\n纹理（绝非纯黑）;红色是唯一饱和的点缀（角色标志性的连衣裙/围巾），没有其他\\n饱和色彩;只有来自真实物理光源的暖光，热的比例<10%。\\n质感：柯达式胶片仿真，细腻有机颗粒，变形宽银幕风格的椭圆形散景，织物纤维可见，\\n头发分层叠放，所有物体下方都有接触阴影，没有塑料皮肤。\\n物理相机：物理相机+变形镜头感觉，稳定的运动模糊，自然景深，\\n没有CG塑料效果，没有2D平面着色。\\n浅肤互动：从上方/侧面透进的天空光，将头顶和一侧肩膀投射到寒冷中\\n蓝灰色;地面反射将微弱的冷光提升到下颌和下巴下方;眼窝隐匿于阴影中\\n眉骨下方;来自真实光源的肩部轮廓灯;皮肤上的两个温度区\\n（冷主导，只有真正源泉击中的地方才用暖音）。\\n运动物理：每个动作都以全体链条（驱动器+稳定器+补偿器+非自愿）来表示\\n呼吸/眨眼/微摇晃）;没有情感词汇——通过可见的肌肉和身体动作来表达情感;\\n静止不动时会显示体重转移、手臂位置、呼吸、2-3毫米的摇晃。\\n环境动态：每张照片至少有3-4个移动元素（风、尘埃、雾、光束、反射，\\nTyndall光束，光与粒子同时存在。\\n四层帧：前景（0-2米）+ 中景角色（2-8米）+ 背景（8米+）+ 空气层（尘埃、雾气，\\n温度效应）每秒都充满。\\n严格演员阵容：画面中只有两个人类角色，没有克隆人，没有额外角色。\\n缺点：没有角色身份漂移，没有额外字符，没有文字/水印/标志，没有二维平面阴影，\\n没有Q版比例，没有塑料皮肤，没有过饱和度，没有无源的温暖光线，没有纯粹的黑色阴影，\\n没有跳帧，没有多余的肢体，没有变形的手。\\n\\n镜头/摄影：中特写 → 特写 ·手持微晃 + 急推\\n- [0-3s] 中景层：老板立于男主工位旁，单手拍桌，桌面水杯水面晃动，冷白顶光从上压下，发际线反光，眉骨投下阴影，嘴部开合（训斥）；前景层：桌面文件与键盘边缘清晰，杯沿反光；背景层：同事虚影在隔间后交头接耳；空气层：顶光下微尘可见，荧光灯管偶发一次频闪。\\n- [3-7s] 急推至特写：老板嘴部继续开合，眉头下压，下颌线绷紧，手指点向桌面文件；镜头随拍桌节奏微晃。\\n- [7-10s] 切图1近景：他低头，视线垂向桌面，双肩内缩，右手手指攥紧又松开，喉结吞咽一次；冷白顶光在他眼窝投下深阴影；背景同事虚影仍在移动；画面右缘窗外灰白天光。\\n\\n音频与声音：低频弦乐持续低鸣（压迫感）;拍桌闷响、水杯震动声;老板（45岁低沉压迫中年男声，鼻音重、语速慢而有力，怒）：“这方案改了三版了，还是这个鬼样子！今晚改不完，你就别下班了！”;同事低语声（年轻男声群，模糊）;荧光灯频闪的“嗡”声。\\n\\n限制：无对焦中额外字符（焦点只允许老板与男主，同事一律虚影）;无文字/标志;顶光唯一光源，无暖光;无纯黑阴影;无二维平面阴影。\",\"startFrame\":357,\"endFrame\":600}]}}",
+        "minimax_h3_timeline": ""
+      },
+      "title": "素材规划台"
+    },
+    {
+      "id": 10,
+      "type": "SaveVideo",
+      "pos": [
+        5040.393063268118,
+        -576.7656514022992
+      ],
+      "size": [
+        980,
+        720
+      ],
+      "flags": {},
+      "order": 26,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "视频",
+          "name": "video",
+          "type": "VIDEO",
+          "link": 232
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "格式",
+          "name": "format",
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "format"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "编解码器",
+          "name": "format.codec",
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "format.codec"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "编码器",
+          "name": "codec",
+          "shape": 7,
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "codec"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "encoding",
+          "name": "codec.encoding",
+          "shape": 7,
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "codec.encoding"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "video",
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "H3_15秒-多段_3D/CASE_ID",
+        "mp4",
+        "auto",
+        "h264",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "H3_15秒-多段_3D/CASE_ID",
+        "format": "mp4",
+        "format.codec": "auto",
+        "codec": "h264",
+        "codec.encoding": "auto"
+      },
+      "title": "保存 15秒-多段仅3D成片"
+    },
+    {
+      "id": 114,
+      "type": "MarkdownNote",
+      "pos": [
+        3877.045080197258,
+        -221.60352660414793
+      ],
+      "size": [
+        520,
+        440
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "说明：15秒-多段 · 仅 3D",
+      "properties": {},
+      "widgets_values": [
+        "## 15秒-多段 · 仅 3D 放大（不跑 T8）\n\n段数在规划台改。这张按**每段大约 15 秒**，切成 141 帧窗再 3D 抬。\n\n1. 规划台改段数，每段约 15 秒。\n2. 一采 Output MP = 0，sequential → output/H3_0.4MP_15秒-多段_3D/\n3. 二采步数 0，「长段切窗再放大」打开，窗口 141。不要拆「一采成片」。\n4. 成片 output/H3_15秒-多段_3D/\n"
+      ],
+      "widgets_values_named": {
+        "text": "## 15秒-多段 · 仅 3D 放大（不跑 T8）\n\n段数在规划台改。这张按**每段大约 15 秒**，切成 141 帧窗再 3D 抬。\n\n1. 规划台改段数，每段约 15 秒。\n2. 一采 Output MP = 0，sequential → output/H3_0.4MP_15秒-多段_3D/\n3. 二采步数 0，「长段切窗再放大」打开，窗口 141。不要拆「一采成片」。\n4. 成片 output/H3_15秒-多段_3D/\n"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 202,
+      "type": "SaveVideo",
+      "pos": [
+        1745.8733654975072,
+        -823.2629808319484
+      ],
+      "size": [
+        1637.693267266039,
+        1031.8295929255771
+      ],
+      "flags": {},
+      "order": 23,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "视频",
+          "name": "video",
+          "type": "VIDEO",
+          "link": 223
+        },
+        {
+          "localized_name": "文件名前缀",
+          "name": "filename_prefix",
+          "type": "STRING",
+          "widget": {
+            "name": "filename_prefix"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "格式",
+          "name": "format",
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "format"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "编解码器",
+          "name": "format.codec",
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "format.codec"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "编码器",
+          "name": "codec",
+          "shape": 7,
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "codec"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "encoding",
+          "name": "codec.encoding",
+          "shape": 7,
+          "type": "COMFY_DYNAMICCOMBO_V3",
+          "widget": {
+            "name": "codec.encoding"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "video",
+          "name": "video",
+          "type": "VIDEO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.34.0",
+        "Node name for S&R": "SaveVideo"
+      },
+      "widgets_values": [
+        "H3_0.4MP_15秒-多段_3D/CASE_ID",
+        "mp4",
+        "auto",
+        "h264",
+        "auto"
+      ],
+      "widgets_values_named": {
+        "filename_prefix": "H3_0.4MP_15秒-多段_3D/CASE_ID",
+        "format": "mp4",
+        "format.codec": "auto",
+        "codec": "h264",
+        "codec.encoding": "auto"
+      },
+      "title": "保存 15秒-多段 0.4"
+    },
+    {
+      "id": 330,
+      "type": "MarkdownNote",
+      "pos": [
+        779.0132774165352,
+        -67.36090835196649
+      ],
+      "size": [
+        380,
+        280
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "用法：每段约 15 秒，切窗再抬",
+      "properties": {},
+      "widgets_values": [
+        "**15秒-多段 · 仅 3D**\n\n1. 每段大约 15 秒\n2. 一采 → H3_0.4MP_15秒-多段_3D/\n3. 切窗 3D → H3_15秒-多段_3D/\n4. 「长段切窗再放大」必须打开\n"
+      ],
+      "widgets_values_named": {
+        "text": "**15秒-多段 · 仅 3D**\n\n1. 每段大约 15 秒\n2. 一采 → H3_0.4MP_15秒-多段_3D/\n3. 切窗 3D → H3_15秒-多段_3D/\n4. 「长段切窗再放大」必须打开\n"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 331,
+      "type": "MarkdownNote",
+      "pos": [
+        1729.3420187755112,
+        272.3790685301814
+      ],
+      "size": [
+        300,
+        512
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "title": "分辨率对照",
+      "properties": {},
+      "widgets_values": [
+        "| megapixels | Aspect | Output (multiple=32) |\n|---|---|---|\n| 0.2 | 16:9 | 608 x 352 |\n| 0.3 | 16:9 | 736 x 416 |\n| 0.4 | 16:9 | 864 x 480 |\n| 0.5 | 16:9 | 960 x 544 |\n| 0.6 | 16:9 | 1056 x 608 |\n| 0.7 | 16:9 | 1152 x 640 |\n| 0.8 | 16:9 | 1216 x 672 |\n| 0.9 | 16:9 | 1280 x 736 |\n| 0.98 | 16:9 | 1344 x 768 |\n| 1.0 | 16:9 | 1376 x 768 |\n| 1.2 | 16:9 | 1504 x 832 |\n| 1.5 | 16:9 | 1664 x 928 |\n| 1.8 | 16:9 | 1824 x 1024 |\n| 2.0 | 16:9 | 1920 x 1088 |\n"
+      ],
+      "widgets_values_named": {
+        "text": "| megapixels | Aspect | Output (multiple=32) |\n|---|---|---|\n| 0.2 | 16:9 | 608 x 352 |\n| 0.3 | 16:9 | 736 x 416 |\n| 0.4 | 16:9 | 864 x 480 |\n| 0.5 | 16:9 | 960 x 544 |\n| 0.6 | 16:9 | 1056 x 608 |\n| 0.7 | 16:9 | 1152 x 640 |\n| 0.8 | 16:9 | 1216 x 672 |\n| 0.9 | 16:9 | 1280 x 736 |\n| 0.98 | 16:9 | 1344 x 768 |\n| 1.0 | 16:9 | 1376 x 768 |\n| 1.2 | 16:9 | 1504 x 832 |\n| 1.5 | 16:9 | 1664 x 928 |\n| 1.8 | 16:9 | 1824 x 1024 |\n| 2.0 | 16:9 | 1920 x 1088 |\n"
+      },
+      "color": "#222",
+      "bgcolor": "#000"
+    },
+    {
+      "id": 350,
+      "type": "MiniMaxH3WindowedRefine",
+      "pos": [
+        4533.749318503454,
+        -558.5105916291878
+      ],
+      "size": [
+        420,
+        520
+      ],
+      "flags": {},
+      "order": 22,
+      "mode": 0,
+      "inputs": [
+        {
+          "localized_name": "图像",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 224
+        },
+        {
+          "localized_name": "模型",
+          "name": "model",
+          "type": "MODEL",
+          "link": 227
+        },
+        {
+          "localized_name": "CLIP",
+          "name": "clip",
+          "type": "CLIP",
+          "link": 228
+        },
+        {
+          "localized_name": "视频 VAE",
+          "name": "vae",
+          "type": "VAE",
+          "link": 229
+        },
+        {
+          "localized_name": "音频 VAE",
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 230
+        },
+        {
+          "localized_name": "采样器",
+          "name": "sampler",
+          "type": "SAMPLER",
+          "link": 231
+        },
+        {
+          "localized_name": "音频",
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 225
+        },
+        {
+          "localized_name": "有限分段规划",
+          "name": "finite_plan",
+          "shape": 7,
+          "type": "MINIMAX_H3_FINITE_SEGMENT_PLAN",
+          "link": 226
+        },
+        {
+          "localized_name": "一采成片",
+          "name": "source_video",
+          "shape": 7,
+          "type": "VIDEO",
+          "link": 233
+        },
+        {
+          "localized_name": "种子",
+          "name": "seed",
+          "type": "INT",
+          "widget": {
+            "name": "seed"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "输出百万像素",
+          "name": "output_megapixels",
+          "type": "FLOAT",
+          "widget": {
+            "name": "output_megapixels"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "超分方式",
+          "name": "upscale_method",
+          "type": "COMBO",
+          "widget": {
+            "name": "upscale_method"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "二采 denoise",
+          "name": "refine_denoise",
+          "type": "FLOAT",
+          "widget": {
+            "name": "refine_denoise"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "二采步数",
+          "name": "refine_steps",
+          "type": "INT",
+          "widget": {
+            "name": "refine_steps"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "窗间清理显存",
+          "name": "clear_vram_between_windows",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "clear_vram_between_windows"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "窗口大小",
+          "name": "window_frames",
+          "type": "COMBO",
+          "widget": {
+            "name": "window_frames"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "重叠帧数",
+          "name": "overlap_frames",
+          "type": "INT",
+          "widget": {
+            "name": "overlap_frames"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "Latent 放大模型",
+          "name": "latent_upscale_model",
+          "type": "COMBO",
+          "widget": {
+            "name": "latent_upscale_model"
+          },
+          "link": null
+        },
+        {
+          "localized_name": "长段切窗再放大",
+          "name": "split_long_windows",
+          "type": "BOOLEAN",
+          "widget": {
+            "name": "split_long_windows"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "localized_name": "Final Video",
+          "name": "Final Video",
+          "type": "VIDEO",
+          "links": [
+            232
+          ]
+        },
+        {
+          "localized_name": "音频",
+          "name": "Audio",
+          "type": "AUDIO",
+          "links": []
+        },
+        {
+          "localized_name": "状态",
+          "name": "Status",
+          "type": "STRING",
+          "links": []
+        }
+      ],
+      "title": "按窗 3D 放大 · 15秒段",
+      "properties": {
+        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector",
+        "ver": "8fe06e3a83930089bcea7fe053263dd206650e53",
+        "Node name for S&R": "MiniMaxH3WindowedRefine"
+      },
+      "widgets_values": [
+        42,
+        "fixed",
+        2,
+        "h3_latent",
+        0,
+        0,
+        true,
+        "141 (~5.9s)",
+        39,
+        "auto",
+        true
+      ],
+      "widgets_values_named": {
+        "seed": 42,
+        "control_after_generate": "fixed",
+        "output_megapixels": 2,
+        "upscale_method": "h3_latent",
+        "refine_denoise": 0,
+        "refine_steps": 0,
+        "clear_vram_between_windows": true,
+        "window_frames": "141 (~5.9s)",
+        "overlap_frames": 39,
+        "latent_upscale_model": "auto",
+        "split_long_windows": true
+      },
+      "color": "#332922",
+      "bgcolor": "#593930"
+    }
+  ],
+  "links": [
+    [
+      30,
+      1,
+      0,
+      17,
+      0,
+      "MODEL"
+    ],
+    [
+      31,
+      17,
+      0,
+      5,
+      0,
+      "MODEL"
+    ],
+    [
+      38,
+      17,
+      0,
+      8,
+      0,
+      "MODEL"
+    ],
+    [
+      14,
+      2,
+      0,
+      8,
+      1,
+      "CLIP"
+    ],
+    [
+      15,
+      3,
+      0,
+      8,
+      2,
+      "VAE"
+    ],
+    [
+      16,
+      4,
+      0,
+      8,
+      3,
+      "VAE"
+    ],
+    [
+      17,
+      7,
+      2,
+      8,
+      4,
+      "MINIMAX_H3_FINITE_SEGMENT_PLAN"
+    ],
+    [
+      18,
+      6,
+      0,
+      8,
+      5,
+      "SAMPLER"
+    ],
+    [
+      19,
+      5,
+      0,
+      8,
+      6,
+      "SIGMAS"
+    ],
+    [
+      224,
+      8,
+      1,
+      350,
+      0,
+      "IMAGE"
+    ],
+    [
+      225,
+      8,
+      2,
+      350,
+      6,
+      "AUDIO"
+    ],
+    [
+      226,
+      7,
+      2,
+      350,
+      7,
+      "MINIMAX_H3_FINITE_SEGMENT_PLAN"
+    ],
+    [
+      227,
+      17,
+      0,
+      350,
+      1,
+      "MODEL"
+    ],
+    [
+      228,
+      2,
+      0,
+      350,
+      2,
+      "CLIP"
+    ],
+    [
+      229,
+      3,
+      0,
+      350,
+      3,
+      "VAE"
+    ],
+    [
+      230,
+      4,
+      0,
+      350,
+      4,
+      "VAE"
+    ],
+    [
+      231,
+      6,
+      0,
+      350,
+      5,
+      "SAMPLER"
+    ],
+    [
+      232,
+      350,
+      0,
+      10,
+      0,
+      "VIDEO"
+    ],
+    [
+      223,
+      8,
+      4,
+      202,
+      0,
+      "VIDEO"
+    ],
+    [
+      233,
+      8,
+      4,
+      350,
+      8,
+      "VIDEO"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 2,
+      "title": "一采 · 15秒-多段 0.4",
+      "color": "#3f789e",
+      "bounding": [
+        200,
+        -900,
+        3225.4,
+        1600
+      ],
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "二采 · 切窗仅 3D 到 2.0",
+      "color": "#3A7D44",
+      "bounding": [
+        4380,
+        -760,
+        1100,
+        620
+      ],
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7627768444385683,
+      "offset": [
+        -3735.84216549189,
+        43.76080224383102
+      ]
+    },
+    "anomalous_hashes": {
+      "3_minimax_h3_video_vae_fp16.safetensors": {
+        "hash": "",
+        "size": 5207808496
+      },
+      "4_minimax_h3_audio_vae_fp32.safetensors": {
+        "hash": "",
+        "size": 605254808
+      },
+      "1_minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors": {
+        "hash": "",
+        "size": 20980178976
+      }
+    },
+    "frontendVersion": "1.52.7",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
