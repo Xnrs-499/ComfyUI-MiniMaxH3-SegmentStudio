@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). This project is released under GPL-3.0.
 
+## [Unreleased]
+
+- Add `docs/INSTALL_CN.md`: exact model file names and target folders, required vs optional plugins, the `nvidia-vfx` dependency boundary for `nvidia_rtx_vsr`, and a checklist for the "validation failed / 校验失败" error on the first-pass `Final Video` link.
+
 ## [1.0.0] — 2026-10-18
 
 Independent pack: MiniMax H3 Segment Studio.

@@ -52,6 +52,8 @@ RTX 5060 Ti 16GB + SageAttention，25 秒 / 600 帧大约 **一采 13 分钟 + �
 - 视频 VAE + 音频 VAE
 - `latent_upscale_models/minimax_h3_latent_upscaler_3d_bf16.safetensors`（按窗二采也可选 `auto`）
 
+**完整清单（文件名、放哪个目录、缺了会怎样、报错怎么查）见 [docs/INSTALL_CN.md](docs/INSTALL_CN.md)。**
+
 可选：UNET 前接 `PathchSageAttentionKJ`（[KJNodes](https://github.com/kijai/ComfyUI-KJNodes)）。
 
 过程预览直接画在一采采样器和按窗二采节点上：把 `MiniMax-H3-TAE.safetensors` 放到 `models/vae_approx/`（或 `taeh3.safetensors`）。保持「过程预览」打开即可，不用再接 KJ 的预览节点。
@@ -70,6 +72,8 @@ RTX 5060 Ti 16GB + SageAttention，25 秒 / 600 帧大约 **一采 13 分钟 + �
 | 二采回退 / AV 拼接 | [H3 Audio T8](https://github.com/T8mars/comfyui-minimax-h3-audio-T8) · PT_H3ConcatAVLatent | T8mars · PT |
 
 完整名单和感谢的话写在 [CREDITS.md](CREDITS.md)。**谢谢石兄松、AIMixer、kijai、T8mars、LBH-123-AI、facok，以及 MiniMax 与 ComfyUI。**
+
+装哪些、必需还是可选、报“校验失败”怎么查：**[docs/INSTALL_CN.md](docs/INSTALL_CN.md)**。
 
 ## GitHub
 

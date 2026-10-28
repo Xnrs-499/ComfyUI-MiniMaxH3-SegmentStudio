@@ -9,7 +9,7 @@ Independent ComfyUI pack for MiniMax H3 long video on a **16GB** card:
 
 [简体中文](README_CN.md) · English
 
-This is a **GPL-3.0 fork** of [ComfyUI-MiniMaxH3-TimelineDirector](https://github.com/Songssx/ComfyUI-MiniMaxH3-TimelineDirector) plus the 0.4→2.0 workflow we actually run. Plugin list and thanks: **[CREDITS.md](CREDITS.md)** · [NOTICE](NOTICE).
+This is a **GPL-3.0 fork** of [ComfyUI-MiniMaxH3-TimelineDirector](https://github.com/Songssx/ComfyUI-MiniMaxH3-TimelineDirector) plus the 0.4→2.0 workflow we actually run. Plugin list and thanks: **[CREDITS.md](CREDITS.md)** · [NOTICE](NOTICE). Install checklist: **[docs/INSTALL_CN.md](docs/INSTALL_CN.md)**.
 
 ## Do not load both packs
 
@@ -55,6 +55,8 @@ Place as usual under `ComfyUI/models/`:
 - `latent_upscale_models/minimax_h3_latent_upscaler_3d_bf16.safetensors` (or `auto` on Windowed Refine)
 
 Optional: `PathchSageAttentionKJ` ([KJNodes](https://github.com/kijai/ComfyUI-KJNodes)) in front of the UNET.
+
+Full install checklist (exact file names, target folders, optional vs required plugins, and the "validation failed" fix) is in **[docs/INSTALL_CN.md](docs/INSTALL_CN.md)** (Chinese).
 
 Live preview on the sampler / Windowed Refine: put `MiniMax-H3-TAE.safetensors` in `models/vae_approx/` (or `taeh3.safetensors`). Leave **Live Preview** on; there is no extra KJ preview node to wire.
 
