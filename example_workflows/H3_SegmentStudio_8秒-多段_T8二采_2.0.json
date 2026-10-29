@@ -503,8 +503,7 @@
         }
       ],
       "properties": {
-        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector",
-        "ver": "bad313e7e1a7eb300a23aac9f094da63fb536430",
+        "aux_id": "Xnrs-499/ComfyUI-MiniMaxH3-SegmentStudio",
         "Node name for S&R": "MiniMaxH3FiniteSegmentSampler"
       },
       "widgets_values": [
@@ -756,8 +755,7 @@
         }
       ],
       "properties": {
-        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector",
-        "ver": "bad313e7e1a7eb300a23aac9f094da63fb536430",
+        "aux_id": "Xnrs-499/ComfyUI-MiniMaxH3-SegmentStudio",
         "Node name for S&R": "MiniMaxH3TimelinePlanner"
       },
       "widgets_values": [
@@ -1231,8 +1229,7 @@
       ],
       "title": "按窗 T8 二采 0.4→2.0",
       "properties": {
-        "aux_id": "Songssx/ComfyUI-MiniMaxH3-TimelineDirector",
-        "ver": "8fe06e3a83930089bcea7fe053263dd206650e53",
+        "aux_id": "Xnrs-499/ComfyUI-MiniMaxH3-SegmentStudio",
         "Node name for S&R": "MiniMaxH3WindowedRefine"
       },
       "widgets_values": [

@@ -23,7 +23,7 @@
 
 ## 致谢
 
-用到的插件和感谢名单见仓库根目录 [CREDITS.md](../CREDITS.md)。
+用到的插件、示例图必装 vs 回退路径，见 [INSTALL_CN.md](INSTALL_CN.md) 与仓库根目录 [CREDITS.md](../CREDITS.md)。
 
 ## 和整段二采的区别
 

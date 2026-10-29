@@ -2,7 +2,15 @@
 
 这份文档回答三个问题：**要哪些模型**、**要哪些插件**、**分别放在哪个目录**。
 
-示例工作流 `example_workflows/H3_SegmentStudio_*.json` 一共同到 11 种节点，其中只有 4 种来自本包以外。照着下面放好就能开图。
+示例工作流 `example_workflows/H3_SegmentStudio_*.json` 一共 **11 种节点类型**，拆开是：
+
+| 来源 | 数量 | 节点 |
+| --- | --- | --- |
+| **本包** | 3 | `MiniMaxH3TimelinePlanner` · `MiniMaxH3FiniteSegmentSampler` · `MiniMaxH3WindowedRefine` |
+| **ComfyUI 官方** | 7 | `UNETLoader` · `CLIPLoader` · `VAELoader`×2 · `KSamplerSelect` · `BasicScheduler` · `SaveVideo` · `MarkdownNote` |
+| **必须另装的 custom_nodes** | 1 | `PathchSageAttentionKJ`（[ComfyUI-KJNodes](https://github.com/kijai/ComfyUI-KJNodes)） |
+
+不是「还要再装 4 个插件」。原样打开 4 张示例图，**唯一缺了会红框的外部插件是 KJNodes**。ComfyUI-Manager **不会**根据本包自动装 KJNodes，要自己装。
 
 ---
 
@@ -47,25 +55,26 @@ ComfyUI/models/latent_upscale_models ... LTX upscalers are not compatible.
 
 ## 二、插件清单
 
-### 1. 必须装
+### 1. 示例图必须另装
 
 | 插件 | 提供的节点 | 作用 | 装在 |
 | --- | --- | --- | --- |
-| **ComfyUI 本体**（含官方 MiniMax H3 支持） | `UNETLoader` `CLIPLoader` `VAELoader` `BasicScheduler` `KSamplerSelect` `SaveVideo` | 加载模型、调度、保存视频 | 官方最新版 |
+| **ComfyUI 本体**（含官方 MiniMax H3） | `UNETLoader` `CLIPLoader` `VAELoader` `BasicScheduler` `KSamplerSelect` `SaveVideo` | 加载模型、调度、保存视频；还要 `VIDEO` 类型 | 官方最新版，见下面「版本硬要求」 |
 | **ComfyUI-KJNodes**（kijai） | `PathchSageAttentionKJ` | 4 张图都串在 UNET 前，16GB 上 T8 才跑得动 141 帧 | `custom_nodes/ComfyUI-KJNodes` |
 
 KJNodes 是本包**唯一必须另装**的外部插件。没装的话，节点会变红并提示缺少 `PathchSageAttentionKJ`。
 
 `PathchSageAttentionKJ` 的 `sage_attention` 默认 `auto`，会执行 `from sageattention import sageattn`，所以还要装 `sageattention` 这个 pip 库。没有的话可以把该节点设成 `disabled`，或者直接绕过它把 UNET 接到采样器——但要准备把二采窗口调短，否则 16GB 可能 OOM。
 
-### 2. 可选（缺了自动回退，不中断）
+`sageattention` **不要**写进本包 `requirements.txt`：Manager 一键 pip 在很多 CUDA / torch 组合上会装失败。
+
+### 2. 静默回退（缺了不中断）
 
 | 插件 | 提供的节点 | 何时才会用到 | 缺了会怎样 |
 | --- | --- | --- | --- |
-| **MiniMax H3 Audio T8**（T8mars） | `MiniMaxH3AudioConditioningT8` | 按窗二采复用不了一采提示词/参考图时的回退条件 | 先试复用，失败才走它；纯回退路径 |
-| **ComfyUI-PT_H3ConcatAVLatent**（PT） | `PT_H3ConcatAVLatent` | 把视频 latent 和音频 latent 拼成 H3 AV | 已用 `try/except` 包住，失败改用核心 `NestedTensor` |
-| **ComfyUI_MiniMaxH3_Director**（AIMixer） | 无（只提供人像精修） | 只有用到 `MiniMaxH3TimelineFaceRefine` 节点才需要 | 4 张示例图都不含此节点 |
-| **nvidia-vfx**（pip 包，提供 `nvvfx`） | 无 | 只有把二采超分方式改成 `nvidia_rtx_vsr` 才需要 | 自动退回 lanczos，不报错中断 |
+| **ComfyUI-PT_H3ConcatAVLatent**（PT） | `PT_H3ConcatAVLatent` | 把视频 latent 和音频 latent 拼成 H3 AV | `try/except` 后改用核心 `NestedTensor` |
+| **nvidia-vfx**（pip，提供 `nvvfx`） | 无 | 只有把二采超分方式改成 `nvidia_rtx_vsr` | 警告后退回 **lanczos** |
+| **KJNodes tiny-VAE**（过程预览） | 内部加载 | 一采 / 二采节点上的过程预览 | 预览变弱或关掉；**出片仍跑** |
 
 AV 拼接的回退写法：
 
@@ -79,7 +88,18 @@ AV 拼接的回退写法：
     from comfy.nested_tensor import NestedTensor
 ```
 
-### 3. 必须停用（不能同时开）
+### 3. 条件硬依赖（示例 JSON 里没有，走到那条路径才会炸）
+
+| 插件 | 提供的节点 / 模块 | 何时才会用到 | 缺了会怎样 |
+| --- | --- | --- | --- |
+| **MiniMax H3 Audio T8**（T8mars） | `MiniMaxH3AudioConditioningT8` | 按窗二采**复用一采规划条件失败**之后的回退 | 主路径成功时完全不调用；失败且未装则报 `MiniMaxH3AudioConditioningT8 is not installed` |
+| **MiniMax-H3-Prompt-Rewriter-ComfyUI** | `minimax_h3_rewriter.writer_omni` | 只用 **`MiniMaxH3OmniPromptBridge`** | `MiniMax-H3-Prompt-Rewriter-ComfyUI is missing...` |
+| **ComfyUI_MiniMaxH3_Director**（AIMixer） | FaceRefine 运行时 | 展开图接到 **`MiniMaxH3TimelineFaceRefine`** | `FaceRefine requires ComfyUI_MiniMaxH3_Director...`；4 张示例图都没有此节点 |
+| **ffmpeg**（经 `imageio_ffmpeg`） | 无 | 规划台生成低清预览 | `ComfyUI environment does not provide ffmpeg...`；不影响直接出片 |
+
+T8 回退**没有** `try/except`：规划条件失败就会 `_node_class("MiniMaxH3AudioConditioningT8")`，没装即中断。
+
+### 4. 必须停用（不能同时开）
 
 | 插件 | 原因 |
 | --- | --- |
@@ -97,7 +117,7 @@ AV 拼接的回退写法：
         )
 ```
 
-### 4. 不需要另装（已内置）
+### 5. 不需要另装（已内置）
 
 | 项目 | 说明 |
 | --- | --- |
@@ -105,15 +125,42 @@ AV 拼接的回退写法：
 | H3 3D latent Upscaler 插件 | 结构已内置，只需要模型文件 |
 | Timeline Director | 功能已整包融合，不用再装上游 |
 
+### 6. ComfyUI 版本硬要求
+
+本包大量用 `comfy_api.latest`、节点 expand、`NestedTensor`。**太旧的 Comfy / 没合官方 H3 的 fork 会直接挂**，不是缺本包。`pyproject.toml` 里写了 `requires-comfyui = ">=0.30.0"`。
+
+| 能力 | 缺了的表现 |
+| --- | --- |
+| `comfy.nested_tensor.NestedTensor`、`comfy_extras.nodes_minimax_h3` | 插件 import 失败，或加载不了 H3 模型 |
+| **`MiniMaxH3AddGuide`**（官方 PR #15439） | 规划编码报 `update to a build containing PR #15439` |
+| **`VIDEO` 类型** + 新版 `SaveVideo`（`format` / `codec`） | 示例图校验失败 |
+| Drift-Control 动态 denoise mask / apply-model wrappers | 段间续写报错 |
+
+### 7. 示例图自带的本机路径（不是缺插件）
+
+规划台 `timeline_data` 里嵌了作者机器上的预设图，形如：
+
+`minimax_h3_timeline_director/presets/MiniMaxH3_Preset_full/images/...`
+
+**仓库不打包这些 png。** 换机器后规划台参考图会找不到，要重新指定。这不是 KJNodes / T8 缺失。
+
+旧 Timeline 手搓图如果画布上单独放了 `MiniMaxH3FiniteSegmentExpansion`，新包 `__init__.py` **没有注册**这个节点（逻辑已并进 `FiniteSegmentSampler` 内部 expand），会显示 Missing node。4 张新示例图不受影响。
+
 ---
 
 ## 三、`nvidia_rtx_vsr` 到底依赖什么
 
-**本包不打包 `nvidia-vfx`。** `requirements.txt` 里没有任何 pip 依赖：
+**本包不打包 `nvidia-vfx`。** `requirements.txt` 里没有任何 pip 依赖（SageAttention / nvidia-vfx 都要自己装到 ComfyUI 那个 Python 里）：
 
-```1:2:custom_nodes/ComfyUI-MiniMaxH3-SegmentStudio/requirements.txt
+```1:8:custom_nodes/ComfyUI-MiniMaxH3-SegmentStudio/requirements.txt
 # No extra pip packages. Uses ComfyUI's torch / numpy / safetensors stack.
-# Optional (already common in aki / kjnodes packs): SageAttention via PathchSageAttentionKJ.
+#
+# Extra custom_nodes (not pip): example graphs need ComfyUI-KJNodes
+#   https://github.com/kijai/ComfyUI-KJNodes  (PathchSageAttentionKJ)
+#
+# Optional pip, install yourself into ComfyUI's Python if you use those paths:
+#   sageattention   — PathchSageAttentionKJ sage_attention=auto
+#   nvidia-vfx      — only if Upscale Method is nvidia_rtx_vsr
 ```
 
 `nvvfx` 是在函数内部**延迟导入**的，只有真正执行 VSR 时才加载：
@@ -167,20 +214,21 @@ python -m pip install nvidia-vfx
 
 ## 四、报“校验失败”怎么查
 
-典型表现（前端报错面板）：
+先分清两种红：
 
-- `由于节点校验检查意外失败，工作流无法通过校验` → 指向 `保存 15秒-多段 0.4`
-- `工作流无法校验已连接的节点` → 指向 `按窗 T8 二采 · 15秒段 - video`
+| 现象 | 原因 |
+| --- | --- |
+| 节点标题红、提示缺少 `PathchSageAttentionKJ` | **没装 KJNodes**（或装了但没重启 / 没 Ctrl+F5） |
+| `由于节点校验检查意外失败` → `保存 15秒-多段 0.4`；`工作流无法校验已连接的节点` → `按窗 T8 二采 · 15秒段 - video` | 一采 `Final Video`（类型 `VIDEO`）接到 `SaveVideo` / 二采「一采成片」时 **节点定义对不上** |
 
-两处报错卡在**同一条线**上：一采节点 `MiniMaxH3FiniteSegmentSampler` 的第 5 个输出 `Final Video`（类型 `VIDEO`），分别接到 `SaveVideo` 和二采的 `一采成片`。
-
-这不是缺模型、也不是缺插件，而是**节点定义对不上**。按顺序排查：
+第二种不是缺模型、也不是缺 KJNodes，按顺序排查：
 
 1. **旧版 Timeline Director 还开着。** 在 `custom_nodes` 里找不带 `.disabled` 的 `ComfyUI-MiniMaxH3-TimelineDirector`，整段改名加 `.disabled`，重启 ComfyUI。
 2. **看启动控制台。** 搜 `register twice` 或 `Timeline Director is still enabled`，有这行就是第 1 条的原因。
 3. **强刷前端。** 浏览器 `Ctrl+F5`，普通刷新不够。
 4. **查接口。** 打开 `http://127.0.0.1:8188/api/object_info/MiniMaxH3FiniteSegmentSampler`，搜 `"Final Video"`。搜不到说明注册的仍是旧包。
 5. **查 ComfyUI 本体版本。** 太旧的版本没有 `VIDEO` 类型，`SaveVideo` 也没有 `format` / `codec` 这两个控件（示例图用的是 `mp4` / `h264`）。
+6. **不要按 Manager 的提示去装 Timeline Director。** 旧示例 JSON 曾把 `aux_id` 写成 `Songssx/ComfyUI-MiniMaxH3-TimelineDirector`，Manager 会以为缺上游。当前仓库里的 4 张图已经改成 `Xnrs-499/ComfyUI-MiniMaxH3-SegmentStudio`。若本地还是旧 JSON，从本仓库重新加载即可。
 
 本机正常时的 schema 长这样，可以拿来对照：
 
@@ -200,6 +248,8 @@ MiniMaxH3FiniteSegmentSampler
 
 1. 重启 ComfyUI，控制台没有 `register twice` / `Timeline Director is still enabled`。
 2. `Ctrl+F5` 后从磁盘加载 `example_workflows/H3_SegmentStudio_8秒-多段_T8二采_2.0.json`。
-3. 4 个加载器节点的下拉框里都能选到上面表格里的文件名，没有红框。
-4. 一采 `Output Megapixels` 是 `0`；二采 `Final Video` 接到按窗二采。
-5. 先跑 1 段短测，确认二采能读一采的 mp4 再上长片。
+3. `PathchSageAttentionKJ` 是绿的（已装 KJNodes），不是 Missing node。
+4. 4 个加载器节点的下拉框里都能选到上面表格里的文件名，没有红框。
+5. 一采 `Output Megapixels` 是 `0`；二采 `Final Video` 接到按窗二采。
+6. 规划台参考图：换机器后重新指定（JSON 里的预设路径不会跟着仓库走）。
+7. 先跑 1 段短测，确认二采能读一采的 mp4 再上长片。

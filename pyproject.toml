@@ -5,6 +5,8 @@ description = "MiniMax H3 long video for ComfyUI: Timeline turbo first pass plus
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
+# Stay empty: SageAttention and nvidia-vfx are GPU-specific. Putting them here
+# makes ComfyUI-Manager pip-install them and fail on many CUDA/torch combos.
 dependencies = []
 keywords = ["comfyui", "minimax-h3", "long-video", "timeline", "windowed-refine", "16gb"]
 
@@ -19,3 +21,14 @@ dev = []
 PublisherId = "local"
 DisplayName = "MiniMax H3 Segment Studio"
 Icon = ""
+# Official MiniMax H3 nodes, NestedTensor, VIDEO, SaveVideo format/codec.
+requires-comfyui = ">=0.30.0"
+
+# Registry / Manager cannot auto-install other custom_nodes from this file.
+# Shipped example_workflows/*.json require one extra pack:
+#   ComfyUI-KJNodes  https://github.com/kijai/ComfyUI-KJNodes
+#   node: PathchSageAttentionKJ
+# Bypass that node if you skip KJNodes; 16GB T8 windows then need to be shorter.
+# Conditional (not in the example JSON): T8mars Audio T8, PT_H3ConcatAVLatent,
+# MiniMax-H3-Prompt-Rewriter-ComfyUI, ComfyUI_MiniMaxH3_Director FaceRefine.
+# Do not enable ComfyUI-MiniMaxH3-TimelineDirector at the same time.

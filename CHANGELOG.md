@@ -6,6 +6,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Thi
 
 ## [Unreleased]
 
+- Retarget example workflow `aux_id` from `Songssx/ComfyUI-MiniMaxH3-TimelineDirector` to `Xnrs-499/ComfyUI-MiniMaxH3-SegmentStudio`, and drop the upstream git `ver` pins. Manager was offering the original Timeline pack, which collides on node IDs and fails validation on `Final Video` / `VIDEO`.
+- Clarify install docs: example graphs are 3 pack nodes + 7 official ComfyUI nodes + **one** extra custom node (`PathchSageAttentionKJ` from KJNodes). T8 / PT / nvidia-vfx are not on the canvas. T8 is a hard fallback only when first-pass refine conditioning fails; PT and nvidia-vfx stay silent fallbacks.
+- `pyproject.toml`: `requires-comfyui = ">=0.30.0"`; keep pip `dependencies` empty so Manager does not try to install SageAttention / nvidia-vfx. Document KJNodes as the recommended extra pack.
+- Align README / CREDITS / NOTICE / example_workflows README with `docs/INSTALL_CN.md`. Add the planner preset-image path pitfall and the unregistered `MiniMaxH3FiniteSegmentExpansion` note.
+
 - Add `docs/INSTALL_CN.md`: exact model file names and target folders, required vs optional plugins, the `nvidia-vfx` dependency boundary for `nvidia_rtx_vsr`, and a checklist for the "validation failed / 校验失败" error on the first-pass `Final Video` link.
 
 ## [1.0.0] — 2026-10-18

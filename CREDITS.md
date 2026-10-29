@@ -24,16 +24,16 @@ Segment Studio 能跑通，是站在这些作者和项目上的。下列插件�
 
 ## 主工作流还需要安装的插件
 
-示例图 `H3_SegmentStudio_8秒-多段_T8二采_2.0.json` 除本包外，还用到：
+示例图 `H3_SegmentStudio_8秒-多段_T8二采_2.0.json` 一共 11 种节点：本包 3 + 官方 7 + **KJNodes 1**。T8 / PT **不在 JSON 画布上**。
 
-| 项目 | 作者 | 图里的节点 / 作用 | 链接 |
-| --- | --- | --- | --- |
-| ComfyUI（含官方 MiniMax H3） | comfyanonymous / Comfy-Org / MiniMax | UNET·CLIP·VAE 加载、KSampler、SaveVideo、官方 H3 条件与网格 | https://github.com/comfyanonymous/ComfyUI |
-| ComfyUI-KJNodes | kijai | `PathchSageAttentionKJ`，16GB 上 T8 能跑进 141 帧；过程预览沿用其 tiny-VAE / OUTER_SAMPLE 思路 | https://github.com/kijai/ComfyUI-KJNodes |
-| MiniMax H3 Audio T8 | T8mars / T8star | `MiniMaxH3AudioConditioningT8`（按窗二采在规划器条件失败时的回退） | https://github.com/T8mars/comfyui-minimax-h3-audio-T8 |
-| ComfyUI-PT_H3ConcatAVLatent | PT | `PT_H3ConcatAVLatent`，把视频 latent 和音频 latent 拼成 H3 AV | 本地 `custom_nodes/ComfyUI-PT_H3ConcatAVLatent` |
+| 关系 | 项目 | 作者 | 节点 / 作用 | 链接 |
+| --- | --- | --- | --- | --- |
+| 示例图必须另装 | ComfyUI（含官方 MiniMax H3） | comfyanonymous / Comfy-Org / MiniMax | UNET·CLIP·VAE 加载、KSampler、SaveVideo、官方 H3 条件与网格 | https://github.com/comfyanonymous/ComfyUI |
+| 示例图必须另装 | ComfyUI-KJNodes | kijai | `PathchSageAttentionKJ`，16GB 上 T8 能跑进 141 帧；过程预览沿用其 tiny-VAE / OUTER_SAMPLE 思路 | https://github.com/kijai/ComfyUI-KJNodes |
+| 二采条件回退（JSON 里没有） | MiniMax H3 Audio T8 | T8mars / T8star | `MiniMaxH3AudioConditioningT8`：仅当复用一采规划条件失败时才调用；未装会报 `is not installed` | https://github.com/T8mars/comfyui-minimax-h3-audio-T8 |
+| AV 拼接静默回退（JSON 里没有） | ComfyUI-PT_H3ConcatAVLatent | PT | `PT_H3ConcatAVLatent`，失败则改用 `NestedTensor` | 本地 `custom_nodes/ComfyUI-PT_H3ConcatAVLatent` |
 
-没有 KJNodes 时，把 SageAttention 节点绕过即可，2.0 窗口可能要再缩短。没有 T8 / PT 节点时，一采主路径仍可用；按窗二采的回退条件和部分展开图会受影响。
+原样打开示例图必须装 KJNodes。没装就把 SageAttention 节点绕过，2.0 窗口可能要再缩短。没有 T8 时，一采主路径和「规划条件复用成功」的二采仍可用。没有 PT 时 AV 拼接自动回退，不中断。完整边界见 [docs/INSTALL_CN.md](docs/INSTALL_CN.md)。
 
 ## 模型与算法
 

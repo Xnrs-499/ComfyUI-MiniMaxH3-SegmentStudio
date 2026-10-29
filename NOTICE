@@ -28,13 +28,18 @@ Design reference (not vendored)
 - NikoDemon80 / ComfyUI-H3-Motion-Context
   https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context
 
-Separate plugins required by the example graph
-----------------------------------------------
+Separate plugins
+----------------
 
-- comfyanonymous/ComfyUI (official MiniMax H3 nodes)
+Required to open the shipped example graphs as-is:
+
+- comfyanonymous/ComfyUI (official MiniMax H3 nodes, VIDEO, SaveVideo)
 - kijai/ComfyUI-KJNodes (PathchSageAttentionKJ)
-- T8mars/comfyui-minimax-h3-audio-T8 (MiniMaxH3AudioConditioningT8 fallback)
-- PT_H3ConcatAVLatent (AV latent concat)
+
+Not on the example canvas (runtime fallbacks only):
+
+- T8mars/comfyui-minimax-h3-audio-T8 (MiniMaxH3AudioConditioningT8, used only if first-pass refine conditioning fails)
+- PT_H3ConcatAVLatent (AV latent concat; silent NestedTensor fallback)
 
 Do not load the original Timeline Director pack at the same time:
 node IDs are intentionally compatible so existing graphs keep working.

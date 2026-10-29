@@ -1,2 +1,11 @@
 # No extra pip packages. Uses ComfyUI's torch / numpy / safetensors stack.
-# Optional (already common in aki / kjnodes packs): SageAttention via PathchSageAttentionKJ.
+#
+# Extra custom_nodes (not pip): example graphs need ComfyUI-KJNodes
+#   https://github.com/kijai/ComfyUI-KJNodes  (PathchSageAttentionKJ)
+#
+# Optional pip, install yourself into ComfyUI's Python if you use those paths:
+#   sageattention   — PathchSageAttentionKJ sage_attention=auto
+#   nvidia-vfx      — only if Upscale Method is nvidia_rtx_vsr
+#
+# Do not add those two to this file. Manager would try to pip-install them
+# and fail on many CUDA / torch combinations.

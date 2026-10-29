@@ -54,7 +54,7 @@ Place as usual under `ComfyUI/models/`:
 - Video VAE + Audio VAE
 - `latent_upscale_models/minimax_h3_latent_upscaler_3d_bf16.safetensors` (or `auto` on Windowed Refine)
 
-Optional: `PathchSageAttentionKJ` ([KJNodes](https://github.com/kijai/ComfyUI-KJNodes)) in front of the UNET.
+The shipped example graphs require [KJNodes](https://github.com/kijai/ComfyUI-KJNodes) (`PathchSageAttentionKJ` in front of the UNET). Bypass that node if you skip KJNodes; shorten 2.0 T8 windows on 16GB.
 
 Full install checklist (exact file names, target folders, optional vs required plugins, and the "validation failed" fix) is in **[docs/INSTALL_CN.md](docs/INSTALL_CN.md)** (Chinese).
 
@@ -69,9 +69,10 @@ To match the original dual-pass look: set Windowed Refine **Upscale Method** to 
 | Vendored here | [Timeline Director](https://github.com/Songssx/ComfyUI-MiniMaxH3-TimelineDirector) | Shi Xiongsong / Songssx |
 | Vendored here | [SelfLift](https://github.com/facok/comfyui-SelfLift) · [H3 3D Upscaler](https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler) | facok · LBH-123-AI |
 | Design only | [MiniMax H3 Director](https://github.com/AIMixer/ComfyUI_MiniMaxH3_Director) | AIMixer |
-| Example graph | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) official H3 | Comfy-Org / MiniMax |
-| Example graph | [KJNodes](https://github.com/kijai/ComfyUI-KJNodes) (SageAttention) | kijai |
-| Fallback / AV concat | [H3 Audio T8](https://github.com/T8mars/comfyui-minimax-h3-audio-T8) · PT_H3ConcatAVLatent | T8mars · PT |
+| Example graph | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) official H3 (`VIDEO` / `SaveVideo`) | Comfy-Org / MiniMax |
+| Required for examples | [KJNodes](https://github.com/kijai/ComfyUI-KJNodes) (`PathchSageAttentionKJ`) | kijai |
+| Refine cond fallback (not in JSON) | [H3 Audio T8](https://github.com/T8mars/comfyui-minimax-h3-audio-T8) | T8mars |
+| Silent AV concat fallback (not in JSON) | PT_H3ConcatAVLatent | PT |
 
 Full thanks: [CREDITS.md](CREDITS.md).
 

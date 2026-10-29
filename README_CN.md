@@ -54,7 +54,7 @@ RTX 5060 Ti 16GB + SageAttention，25 秒 / 600 帧大约 **一采 13 分钟 + �
 
 **完整清单（文件名、放哪个目录、缺了会怎样、报错怎么查）见 [docs/INSTALL_CN.md](docs/INSTALL_CN.md)。**
 
-可选：UNET 前接 `PathchSageAttentionKJ`（[KJNodes](https://github.com/kijai/ComfyUI-KJNodes)）。
+示例图原样打开必须另装 [KJNodes](https://github.com/kijai/ComfyUI-KJNodes)，UNET 前的 `PathchSageAttentionKJ` 才会变绿。没装可以把该节点绕过，直接把 UNET 接到采样器，但 16GB 上 T8 长窗更容易 OOM。
 
 过程预览直接画在一采采样器和按窗二采节点上：把 `MiniMax-H3-TAE.safetensors` 放到 `models/vae_approx/`（或 `taeh3.safetensors`）。保持「过程预览」打开即可，不用再接 KJ 的预览节点。
 
@@ -67,9 +67,10 @@ RTX 5060 Ti 16GB + SageAttention，25 秒 / 600 帧大约 **一采 13 分钟 + �
 | 已打进本包 | [Timeline Director](https://github.com/Songssx/ComfyUI-MiniMaxH3-TimelineDirector) | 石兄松 |
 | 已打进本包 | [SelfLift](https://github.com/facok/comfyui-SelfLift) · [H3 3D Upscaler](https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler) | facok · LBH-123-AI |
 | 学了按窗钉尾，未拷源码 | [MiniMax H3 Director](https://github.com/AIMixer/ComfyUI_MiniMaxH3_Director) | AIMixer |
-| 示例图需要另装 | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) 官方 H3 | Comfy-Org / MiniMax |
-| 示例图需要另装 | [KJNodes](https://github.com/kijai/ComfyUI-KJNodes)（SageAttention） | kijai |
-| 二采回退 / AV 拼接 | [H3 Audio T8](https://github.com/T8mars/comfyui-minimax-h3-audio-T8) · PT_H3ConcatAVLatent | T8mars · PT |
+| 示例图需要另装 | [ComfyUI](https://github.com/comfyanonymous/ComfyUI) 官方 H3（含 `VIDEO` / `SaveVideo`） | Comfy-Org / MiniMax |
+| 示例图必须另装 | [KJNodes](https://github.com/kijai/ComfyUI-KJNodes)（`PathchSageAttentionKJ`） | kijai |
+| 二采条件回退（JSON 里没有） | [H3 Audio T8](https://github.com/T8mars/comfyui-minimax-h3-audio-T8) | T8mars |
+| AV 拼接静默回退（JSON 里没有） | PT_H3ConcatAVLatent | PT |
 
 完整名单和感谢的话写在 [CREDITS.md](CREDITS.md)。**谢谢石兄松、AIMixer、kijai、T8mars、LBH-123-AI、facok，以及 MiniMax 与 ComfyUI。**
 

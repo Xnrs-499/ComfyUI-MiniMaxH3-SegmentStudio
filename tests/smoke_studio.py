@@ -20,8 +20,16 @@ def _node(graph: dict, type_name: str) -> dict:
 def main() -> None:
     pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
     assert 'name = "comfyui-minimax-h3-segment-studio"' in pyproject
+    assert 'requires-comfyui = ">=0.30.0"' in pyproject
     assert (ROOT / "NOTICE").is_file()
     assert (ROOT / "CREDITS.md").is_file()
+    install = (ROOT / "docs" / "INSTALL_CN.md").read_text(encoding="utf-8")
+    assert "唯一缺了会红框的外部插件是 KJNodes" in install
+    assert "MiniMaxH3AudioConditioningT8 is not installed" in install
+    readme_cn = (ROOT / "README_CN.md").read_text(encoding="utf-8")
+    assert "示例图原样打开必须另装" in readme_cn
+    notice = (ROOT / "NOTICE").read_text(encoding="utf-8")
+    assert "Not on the example canvas" in notice
     credits = (ROOT / "CREDITS.md").read_text(encoding="utf-8")
     for name in (
         "TimelineDirector",
@@ -91,6 +99,14 @@ def main() -> None:
     assert lift_15_sampler["widgets_values_named"]["execution_mode"] == "sequential"
     ids = {t8_6["id"], lift_6["id"], t8_15["id"], lift_15["id"]}
     assert len(ids) == 4
+    pack_aux = "Xnrs-499/ComfyUI-MiniMaxH3-SegmentStudio"
+    for graph_path in EX.glob("H3_SegmentStudio_*.json"):
+        graph = _load(graph_path.name)
+        for node in graph["nodes"]:
+            aux = (node.get("properties") or {}).get("aux_id", "")
+            assert "TimelineDirector" not in str(aux), (graph_path.name, node.get("type"), aux)
+            if str(node.get("type", "")).startswith("MiniMaxH3"):
+                assert aux == pack_aux, (graph_path.name, node.get("type"), aux)
     print("segment studio smoke test: PASS")
 
 
